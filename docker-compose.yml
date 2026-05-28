@@ -1,0 +1,8 @@
+services:
+  avito-web:
+    build:
+      context: ./web
+    container_name: avito-web
+    restart: unless-stopped
+    ports:
+      - "80:80"

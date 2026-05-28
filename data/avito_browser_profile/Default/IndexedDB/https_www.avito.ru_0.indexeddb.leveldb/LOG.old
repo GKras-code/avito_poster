@@ -1,0 +1,10 @@
+2026/05/28-17:36:40.680 6910 Creating DB D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\IndexedDB\https_www.avito.ru_0.indexeddb.leveldb since it was missing.
+2026/05/28-17:36:40.687 6910 Reusing MANIFEST D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\IndexedDB\https_www.avito.ru_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/28-17:36:40.735 33a0 Level-0 table #5: started
+2026/05/28-17:36:40.738 33a0 Level-0 table #5: 678 bytes OK
+2026/05/28-17:36:40.741 33a0 Delete type=0 #3
+2026/05/28-17:36:40.742 4afc Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/05/28-17:37:49.735 4afc Level-0 table #7: started
+2026/05/28-17:37:49.736 4afc Level-0 table #7: 6702 bytes OK
+2026/05/28-17:37:49.737 4afc Delete type=0 #4
+2026/05/28-17:37:49.737 4afc Manual compaction at level-0 from '\x00\x0a\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0b\x00\x00\x00' @ 0 : 0; will stop at (end)
