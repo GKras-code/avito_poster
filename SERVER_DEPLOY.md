@@ -1,6 +1,6 @@
 # Ubuntu Server Launch Guide
 
-Этот файл описывает, как поднять Vue-интерфейс на Ubuntu-сервере `89.169.38.182` через Docker.
+Этот файл описывает, как поднять Vue-интерфейс и FastAPI backend на Ubuntu-сервере `89.169.38.182` через Docker.
 
 ## Локальный запуск фронта в VS Code
 
@@ -55,6 +55,39 @@ npm run build
 cd web
 npm.cmd run build
 ```
+
+## Локальный запуск FastAPI в VS Code
+
+Откройте второй терминал в корне проекта.
+
+Создайте и активируйте виртуальное окружение, если оно ещё не готово:
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+Установите backend-зависимости:
+
+```bash
+pip install -r backend/requirements.txt
+python -m playwright install chromium
+```
+
+Запуск FastAPI локально:
+
+```bash
+python -m uvicorn backend.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+После этого API будет доступен по адресу:
+
+```text
+http://localhost:8000/api/health
+http://localhost:8000/api/avito/auth-status
+```
+
+При локальном запуске фронта через Vite запросы на `/api/...` автоматически проксируются на `http://localhost:8000`.
 
 ## 1. Подключение к серверу
 
@@ -139,18 +172,39 @@ cd ~/avito_poster
 docker compose up -d --build
 ```
 
+Эта команда поднимает два контейнера:
+
+1. `avito-web` — Vue frontend + Nginx.
+2. `avito-api` — FastAPI backend с endpoint проверки авторизации Avito.
+
 ## 5. Проверка, что сайт поднялся
 
 ```bash
 docker compose ps
 docker compose logs -n 100 avito-web
+docker compose logs -n 100 avito-api
 curl http://127.0.0.1
+curl http://127.0.0.1:8000/api/health
+curl http://127.0.0.1:8000/api/avito/auth-status
 ```
 
 После этого сайт должен открываться в браузере по адресу:
 
 ```text
 http://89.169.38.182/
+```
+
+FastAPI также будет доступен напрямую по адресу:
+
+```text
+http://89.169.38.182:8000/api/health
+http://89.169.38.182:8000/api/avito/auth-status
+```
+
+И через фронтенд-прокси по адресу:
+
+```text
+http://89.169.38.182/api/avito/auth-status
 ```
 
 Тестовые данные для входа:
@@ -208,6 +262,12 @@ docker compose ps
 
 ```bash
 docker compose logs -f avito-web
+```
+
+Посмотреть логи backend:
+
+```bash
+docker compose logs -f avito-api
 ```
 
 Посмотреть текущий коммит на сервере:

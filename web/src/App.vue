@@ -12,6 +12,9 @@ const password = ref(DEMO_PASSWORD)
 const authError = ref('')
 const isAuthenticated = ref(savedAuthState)
 const activeView = ref('account')
+const avitoCheckPending = ref(false)
+const avitoCheckResult = ref(null)
+const avitoCheckError = ref('')
 
 const menuItems = [
   { id: 'account', label: 'Аккаунт' },
@@ -21,50 +24,10 @@ const menuItems = [
 ]
 
 const sectionContent = {
-  account: {
-    eyebrow: 'Профиль',
-    title: 'Центр управления аккаунтом',
-    description:
-      'Здесь позже можно будет показывать состояние авторизации Avito, имя профиля, рейтинг и результаты последней проверки сессии.',
-    cards: [
-      { title: 'Статус сессии', value: 'Готово к интеграции', hint: 'Подключим проверку из Python-скрипта.' },
-      { title: 'Текущий режим', value: 'Тестовый доступ', hint: 'Логин user, пароль test.' },
-      { title: 'Сервер', value: '89.169.38.182', hint: 'Целевая машина для размещения контейнера.' },
-    ],
-  },
-  ads: {
-    eyebrow: 'Объявления',
-    title: 'Рабочая зона публикаций',
-    description:
-      'Этот раздел подготовлен под список объявлений, массовые действия, фильтрацию и дальнейший запуск сценариев размещения.',
-    cards: [
-      { title: 'Черновики', value: '0', hint: 'Подключим после серверной логики.' },
-      { title: 'Активные объявления', value: '0', hint: 'Здесь появятся карточки и статусы.' },
-      { title: 'Следующий шаг', value: 'Интеграция API/скриптов', hint: 'Интерфейс уже готов к расширению.' },
-    ],
-  },
-  settings: {
-    eyebrow: 'Настройки',
-    title: 'Конфигурация панели',
-    description:
-      'Раздел зарезервирован под серверные адреса, пути к сессиям, параметры контейнера и рабочие флаги запуска.',
-    cards: [
-      { title: 'Тип развёртывания', value: 'Docker + Nginx', hint: 'Статическая сборка внутри контейнера.' },
-      { title: 'Фронтенд', value: 'Vue 3 + Vite', hint: 'Один контейнер, один порт, быстрый деплой.' },
-      { title: 'Следующий этап', value: 'Связка с backend', hint: 'Можно добавить REST API или WebSocket.' },
-    ],
-  },
-  history: {
-    eyebrow: 'История',
-    title: 'Журнал действий',
-    description:
-      'Секция для будущего лога авторизаций, публикаций, изменений настроек и результатов фоновых задач.',
-    cards: [
-      { title: 'Последняя активность', value: 'Нет записей', hint: 'Логирование подключается позже.' },
-      { title: 'Формат', value: 'Хронологическая лента', hint: 'Удобно для аудита и отладки.' },
-      { title: 'Источники', value: 'UI + backend', hint: 'Сведём события в одно место.' },
-    ],
-  },
+  account: { eyebrow: 'Аккаунт', title: 'Проверка авторизации Avito' },
+  ads: { eyebrow: 'Объявления', title: 'Пустая страница' },
+  settings: { eyebrow: 'Настройки', title: 'Пустая страница' },
+  history: { eyebrow: 'История', title: 'Пустая страница' },
 }
 
 const activeSection = computed(() => sectionContent[activeView.value])
@@ -85,7 +48,30 @@ function handleLogout() {
   activeView.value = 'account'
   authError.value = ''
   password.value = DEMO_PASSWORD
+  avitoCheckPending.value = false
+  avitoCheckResult.value = null
+  avitoCheckError.value = ''
   window.localStorage.removeItem(AUTH_STORAGE_KEY)
+}
+
+async function checkAvitoAuthorization() {
+  avitoCheckPending.value = true
+  avitoCheckError.value = ''
+
+  try {
+    const response = await fetch('/api/avito/auth-status')
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+
+    avitoCheckResult.value = await response.json()
+  } catch (error) {
+    avitoCheckResult.value = null
+    avitoCheckError.value = 'Не удалось получить ответ от FastAPI сервера.'
+    console.error(error)
+  } finally {
+    avitoCheckPending.value = false
+  }
 }
 </script>
 
@@ -145,16 +131,30 @@ function handleLogout() {
         <div class="content-copy">
           <p class="eyebrow">{{ activeSection.eyebrow }}</p>
           <h2>{{ activeSection.title }}</h2>
-          <p class="section-text">{{ activeSection.description }}</p>
         </div>
 
-        <div class="card-grid">
-          <article v-for="card in activeSection.cards" :key="card.title" class="info-card">
-            <p class="card-title">{{ card.title }}</p>
-            <strong class="card-value">{{ card.value }}</strong>
-            <p class="card-hint">{{ card.hint }}</p>
-          </article>
+        <div v-if="activeView === 'account'" class="account-actions">
+          <button type="button" class="primary-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">
+            {{ avitoCheckPending ? 'Проверяем...' : 'Проверить авторизацию Avito' }}
+          </button>
+
+          <p v-if="avitoCheckError" class="auth-error">{{ avitoCheckError }}</p>
+
+          <div v-if="avitoCheckResult" class="status-box">
+            <p class="status-line">
+              Авторизован:
+              <strong>{{ avitoCheckResult.authorized ? 'true' : 'false' }}</strong>
+            </p>
+            <p v-if="avitoCheckResult.display_name" class="status-line">
+              Имя профиля: <strong>{{ avitoCheckResult.display_name }}</strong>
+            </p>
+            <p v-if="avitoCheckResult.rating_value" class="status-line">
+              Рейтинг: <strong>{{ avitoCheckResult.rating_value }}</strong>
+            </p>
+          </div>
         </div>
+
+        <div v-else class="empty-tab"></div>
       </section>
     </section>
   </div>
