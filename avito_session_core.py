@@ -81,23 +81,31 @@ class AvitoAuthBootstrap:
             context = self.create_authorized_context(playwright)
             page = context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
-            page.goto(f"{self.config.base_url.rstrip('/')}/profile", wait_until="commit")
+            page.goto(f"{self.config.base_url.rstrip('/')}/profile", wait_until="domcontentloaded")
+            self._stabilize_page_after_manual_login(page)
 
             profile_sidebar = page.locator('div[data-marker="profile-sidebar"]')
-            try:
-                profile_sidebar.first.wait_for(state="visible", timeout=7_000)
-            except PlaywrightTimeoutError:
+            avatar = page.locator('div[data-marker="profile-sidebar-head/avatar"]')
+            wallet_locator = page.locator('span[data-marker="sidebar-wallet-value"]')
+            rating_locator = page.locator('meta[itemprop="ratingValue"]')
+
+            profile_marker_found = self._wait_for_any_profile_marker(
+                profile_sidebar,
+                avatar,
+                wallet_locator,
+                rating_locator,
+            )
+            if not profile_marker_found:
                 if self._looks_authorized(page):
-                    print("Кнопка входа скрыта, но блок профиля не найден.")
+                    print("Кнопка входа скрыта, но маркеры профиля не появились вовремя.")
                 else:
                     print("Профиль не открылся: страница выглядит неавторизованной.")
                 context.close()
                 return None
 
-            avatar = page.locator('div[data-marker="profile-sidebar-head/avatar"]')
-            display_name = avatar.first.get_attribute("title") or ""
-            wallet_value = self._safe_text(page.locator('span[data-marker="sidebar-wallet-value"]'))
-            rating_value = self._safe_text(page.locator('meta[itemprop="ratingValue"]'), attribute_name="content")
+            display_name = self._safe_text(avatar, attribute_name="title") or ""
+            wallet_value = self._safe_text(wallet_locator)
+            rating_value = self._safe_text(rating_locator, attribute_name="content")
 
             snapshot = AvitoProfileSnapshot(
                 profile_url=page.url,
@@ -202,6 +210,17 @@ class AvitoAuthBootstrap:
         """Если кнопка входа видна, считаем сессию неактивной."""
         login_button = page.locator('a[data-marker="header/login-button"]')
         return login_button.count() == 0
+
+    def _wait_for_any_profile_marker(self, *locators) -> bool:
+        """Ждёт любой устойчивый маркер профиля, полезно для headless/Linux сценариев."""
+        for locator in locators:
+            try:
+                locator.first.wait_for(state="attached", timeout=5_000)
+                return True
+            except PlaywrightTimeoutError:
+                continue
+
+        return False
 
     def _safe_text(self, locator, attribute_name: Optional[str] = None) -> Optional[str]:
         """Читает текст или атрибут локатора, если элемент присутствует."""
