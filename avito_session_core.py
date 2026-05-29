@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import json
 import os
 import platform
@@ -40,6 +41,16 @@ class AvitoProfileSnapshot:
     rating_value: Optional[str]
 
 
+@dataclass
+class AvitoProfileInspection:
+    """Результат проверки профиля вместе с визуальным состоянием страницы."""
+
+    snapshot: Optional[AvitoProfileSnapshot]
+    screenshot_base64: str
+    page_url: str
+    page_title: str
+
+
 class AvitoAuthBootstrap:
     """Основа для авторизации на Avito и сохранения авторизованной сессии."""
 
@@ -77,6 +88,10 @@ class AvitoAuthBootstrap:
 
     def read_profile_snapshot(self) -> Optional[AvitoProfileSnapshot]:
         """Открывает `/profile` и читает признаки авторизованного профиля."""
+        return self.inspect_profile_page().snapshot
+
+    def inspect_profile_page(self) -> AvitoProfileInspection:
+        """Открывает `/profile` и возвращает данные страницы плюс скриншот."""
         with sync_playwright() as playwright:
             context = self.create_authorized_context(playwright)
             page = context.new_page()
@@ -95,26 +110,33 @@ class AvitoAuthBootstrap:
                 wallet_locator,
                 rating_locator,
             )
+            snapshot: Optional[AvitoProfileSnapshot] = None
             if not profile_marker_found:
                 if self._looks_authorized(page):
                     print("Кнопка входа скрыта, но маркеры профиля не появились вовремя.")
                 else:
                     print("Профиль не открылся: страница выглядит неавторизованной.")
-                context.close()
-                return None
+            else:
+                display_name = self._safe_text(avatar, attribute_name="title") or ""
+                wallet_value = self._safe_text(wallet_locator)
+                rating_value = self._safe_text(rating_locator, attribute_name="content")
 
-            display_name = self._safe_text(avatar, attribute_name="title") or ""
-            wallet_value = self._safe_text(wallet_locator)
-            rating_value = self._safe_text(rating_locator, attribute_name="content")
+                snapshot = AvitoProfileSnapshot(
+                    profile_url=page.url,
+                    display_name=display_name.strip(),
+                    wallet_value=wallet_value,
+                    rating_value=rating_value,
+                )
 
-            snapshot = AvitoProfileSnapshot(
-                profile_url=page.url,
-                display_name=display_name.strip(),
-                wallet_value=wallet_value,
-                rating_value=rating_value,
+            screenshot_base64 = self._capture_page_screenshot(page)
+            inspection = AvitoProfileInspection(
+                snapshot=snapshot,
+                screenshot_base64=screenshot_base64,
+                page_url=page.url,
+                page_title=page.title(),
             )
             context.close()
-            return snapshot
+            return inspection
 
     def verify_additem_access(self) -> str:
         """Проверяет, что из сохранённой сессии доступен переход к размещению объявления."""
@@ -249,6 +271,11 @@ class AvitoAuthBootstrap:
         raw_text = body.inner_text(timeout=5_000)
         normalized_text = " ".join(raw_text.split())
         return normalized_text
+
+    def _capture_page_screenshot(self, page: Page) -> str:
+        """Делает JPEG-скриншот текущей страницы и кодирует его в base64."""
+        screenshot_bytes = page.screenshot(type="jpeg", quality=65, full_page=True)
+        return base64.b64encode(screenshot_bytes).decode("ascii")
 
     def _save_session(self, context: BrowserContext) -> None:
         """Сохраняет полное состояние контекста и отдельный JSON с cookies."""
