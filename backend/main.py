@@ -14,6 +14,7 @@ class AvitoAuthStatusResponse(BaseModel):
     authorized: bool
     display_name: str | None = None
     rating_value: str | None = None
+    message: str | None = None
 
 
 class AvitoInteractiveAuthResponse(BaseModel):
@@ -111,16 +112,39 @@ def healthcheck() -> dict[str, str]:
 @app.get("/api/avito/auth-status", response_model=AvitoAuthStatusResponse)
 def avito_auth_status() -> AvitoAuthStatusResponse:
     bootstrap = AvitoAuthBootstrap(build_config_from_env())
-    snapshot = bootstrap.read_profile_snapshot()
+    try:
+        snapshot = bootstrap.read_profile_snapshot()
+    except FileNotFoundError:
+        return AvitoAuthStatusResponse(
+            authorized=False,
+            message=(
+                "Данные авторизации Avito ещё не сохранены. Сначала нажмите кнопку "
+                "'Авторизоваться на Avito', завершите вход и дождитесь сохранения сессии."
+            ),
+        )
+    except Exception as error:
+        return AvitoAuthStatusResponse(
+            authorized=False,
+            message=f"Не удалось проверить авторизацию Avito: {error}",
+        )
 
     if snapshot is None:
-        return AvitoAuthStatusResponse(authorized=False)
+        return AvitoAuthStatusResponse(
+            authorized=False,
+            message=(
+                "Сессия Avito не подтверждена. Если вы ещё не входили, нажмите "
+                "'Авторизоваться на Avito' и пройдите вход в браузере."
+            ),
+        )
 
     authorized = bool(snapshot.display_name and snapshot.rating_value)
     return AvitoAuthStatusResponse(
         authorized=authorized,
         display_name=snapshot.display_name or None,
         rating_value=snapshot.rating_value or None,
+        message=(
+            "Авторизация подтверждена." if authorized else "Профиль открылся, но данные авторизации неполные."
+        ),
     )
 
 

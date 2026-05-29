@@ -71,6 +71,7 @@ async function checkAvitoAuthorization() {
     }
 
     avitoCheckResult.value = await response.json()
+    avitoCheckError.value = ''
   } catch (error) {
     avitoCheckResult.value = null
     avitoCheckError.value = 'Не удалось получить ответ от FastAPI сервера.'
@@ -215,6 +216,9 @@ onBeforeUnmount(() => {
             <p class="status-line">
               Авторизован:
               <strong>{{ avitoCheckResult.authorized ? 'true' : 'false' }}</strong>
+            </p>
+            <p v-if="avitoCheckResult.message" class="status-line">
+              {{ avitoCheckResult.message }}
             </p>
             <p v-if="avitoCheckResult.display_name" class="status-line">
               Имя профиля: <strong>{{ avitoCheckResult.display_name }}</strong>
