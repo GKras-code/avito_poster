@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import platform
 import zipfile
 from pathlib import Path
 
@@ -24,12 +25,7 @@ def main() -> None:
     print("После завершения входа вернитесь в консоль и нажмите Enter.")
 
     with sync_playwright() as playwright:
-        context = playwright.chromium.launch_persistent_context(
-            user_data_dir=str(PROFILE_DIR),
-            headless=False,
-            locale="ru-RU",
-            slow_mo=100,
-        )
+        context = _launch_local_browser(playwright)
         page = context.pages[0] if context.pages else context.new_page()
         page.goto(BASE_URL, wait_until="domcontentloaded")
 
@@ -53,6 +49,35 @@ def main() -> None:
         archive.write(COOKIES_PATH, arcname=COOKIES_PATH.name)
 
     print(f"Готово. Загрузите архив на сайт: {ARCHIVE_PATH.resolve()}")
+
+
+def _launch_local_browser(playwright):
+    launch_options = {
+        "user_data_dir": str(PROFILE_DIR),
+        "headless": False,
+        "locale": "ru-RU",
+        "slow_mo": 100,
+    }
+
+    for channel in _preferred_browser_channels():
+        try:
+            print(f"Пробую открыть локальный браузер через канал: {channel}")
+            return playwright.chromium.launch_persistent_context(
+                channel=channel,
+                **launch_options,
+            )
+        except Exception:
+            continue
+
+    print("Локальный Chrome/Edge не найден, пробую встроенный Chromium Playwright.")
+    return playwright.chromium.launch_persistent_context(**launch_options)
+
+
+def _preferred_browser_channels() -> list[str]:
+    if platform.system().lower() == "windows":
+        return ["msedge", "chrome"]
+
+    return ["chrome"]
 
 
 if __name__ == "__main__":

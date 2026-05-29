@@ -16,10 +16,12 @@ from avito_session_core import AvitoAuthBootstrap, build_config_from_env
 
 ROOT_DIR = Path(__file__).resolve().parent
 LOCAL_AUTH_BUNDLE_DIR = ROOT_DIR / "local_auth_bundle"
+LOCAL_AUTH_EXE_PATH = LOCAL_AUTH_BUNDLE_DIR / "AvitoLocalAuth.exe"
 LOCAL_AUTH_BUNDLE_FILES = [
     "avito_local_auth.py",
     "requirements.txt",
     "README.md",
+    "build_windows_exe.ps1",
 ]
 EXPECTED_AUTH_ARCHIVE_FILES = {
     "avito_storage_state.json",
@@ -93,6 +95,11 @@ def avito_auth_status() -> AvitoAuthStatusResponse:
 
 @app.get("/api/avito/auth-package/download")
 def download_avito_auth_package() -> StreamingResponse:
+    if LOCAL_AUTH_EXE_PATH.exists():
+        exe_bytes = LOCAL_AUTH_EXE_PATH.read_bytes()
+        exe_headers = {"Content-Disposition": 'attachment; filename="AvitoLocalAuth.exe"'}
+        return StreamingResponse(io.BytesIO(exe_bytes), media_type="application/octet-stream", headers=exe_headers)
+
     missing_files = [name for name in LOCAL_AUTH_BUNDLE_FILES if not (LOCAL_AUTH_BUNDLE_DIR / name).exists()]
     if missing_files:
         raise HTTPException(

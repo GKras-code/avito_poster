@@ -65,7 +65,6 @@ function handleLogout() {
 function downloadAvitoAuthPackage() {
   const link = document.createElement('a')
   link.href = '/api/avito/auth-package/download'
-  link.download = 'avito-local-auth-bundle.zip'
   document.body.append(link)
   link.click()
   link.remove()
@@ -195,13 +194,13 @@ async function checkAvitoAuthorization() {
             <p class="status-label">Локальная авторизация</p>
             <h3>Авторизоваться на Avito</h3>
             <p class="flow-text">
-              Более рациональный поток: пользователь входит в Avito на своём компьютере,
-              а сайт получает только готовую сессию в архиве.
+              Более рациональный поток: пользователь запускает локальный файл на своём компьютере,
+              входит в Avito в обычном браузере, а сайт получает только готовую сессию в архиве.
             </p>
 
             <div class="flow-actions">
               <button type="button" class="primary-button action-button" @click="downloadAvitoAuthPackage">
-                Авторизоваться на Avito
+                Скачать файл авторизации Avito
               </button>
 
               <button type="button" class="ghost-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">
@@ -210,9 +209,10 @@ async function checkAvitoAuthorization() {
             </div>
 
             <ol class="helper-list">
-              <li>Скачайте архив со скриптом по кнопке выше.</li>
-              <li>Запустите локально `python avito_local_auth.py` и войдите в Avito в открывшемся браузере.</li>
-              <li>После входа нажмите Enter в консоли. Скрипт создаст `avito_auth_bundle.zip`.</li>
+              <li>Скачайте локальный файл авторизации по кнопке выше.</li>
+              <li>Если скачался `AvitoLocalAuth.exe`, просто запустите его.</li>
+              <li>Если скачался архив, распакуйте его и запустите находящийся внутри файл сборки или скрипт.</li>
+              <li>После входа в Avito локальный файл создаст `avito_auth_bundle.zip`.</li>
               <li>Загрузите этот архив ниже на сайт.</li>
             </ol>
           </div>
