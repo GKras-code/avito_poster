@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import platform
+import shutil
 import time
 from dataclasses import dataclass
 from pathlib import Path
@@ -207,16 +208,26 @@ class AvitoAuthBootstrap:
         launch_kwargs = {
             "headless": self.config.headless,
             "slow_mo": self.config.slow_mo_ms,
+            "args": ["--disable-gpu"],
         }
 
         if self.config.browser_channel:
             launch_kwargs["channel"] = self.config.browser_channel
 
-        context = playwright.chromium.launch_persistent_context(
-            user_data_dir=str(self.config.user_data_dir),
-            locale="ru-RU",
-            **launch_kwargs,
-        )
+        try:
+            context = playwright.chromium.launch_persistent_context(
+                user_data_dir=str(self.config.user_data_dir),
+                locale="ru-RU",
+                **launch_kwargs,
+            )
+        except Exception:
+            self._reset_persistent_profile_dir()
+            context = playwright.chromium.launch_persistent_context(
+                user_data_dir=str(self.config.user_data_dir),
+                locale="ru-RU",
+                **launch_kwargs,
+            )
+
         context.set_default_timeout(self.config.timeout_ms)
         return context
 
@@ -318,6 +329,13 @@ class AvitoAuthBootstrap:
     def _ensure_output_dirs(self) -> None:
         self.config.storage_state_path.parent.mkdir(parents=True, exist_ok=True)
         self.config.cookies_path.parent.mkdir(parents=True, exist_ok=True)
+
+    def _reset_persistent_profile_dir(self) -> None:
+        """Удаляет повреждённый профиль браузера и создаёт новый пустой каталог."""
+        profile_dir = self.config.user_data_dir
+        if profile_dir.exists():
+            shutil.rmtree(profile_dir, ignore_errors=True)
+        profile_dir.mkdir(parents=True, exist_ok=True)
 
 
 def build_config_from_env() -> AvitoAuthConfig:

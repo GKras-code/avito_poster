@@ -14,6 +14,8 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 	&& apt-get install -y --no-install-recommends \
 	fluxbox \
 	novnc \
+	websockify \
+	x11-utils \
 	x11vnc \
 	xvfb \
 	&& rm -rf /var/lib/apt/lists/*
