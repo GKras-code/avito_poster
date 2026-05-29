@@ -58,6 +58,7 @@ class AvitoAuthBootstrap:
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
             page.goto(self.config.base_url, wait_until="domcontentloaded")
+            page = self._get_active_page(context, page)
 
             self._prepare_login_flow(page)
             self._wait_for_manual_login(page)
@@ -90,6 +91,7 @@ class AvitoAuthBootstrap:
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
             page.goto(self.config.base_url, wait_until="domcontentloaded")
+            page = self._get_active_page(context, page)
             self._prepare_login_flow(page)
 
             self._notify_progress(
@@ -101,6 +103,7 @@ class AvitoAuthBootstrap:
             deadline = time.time() + timeout_seconds
             while time.time() < deadline:
                 page.wait_for_timeout(int(poll_interval_seconds * 1000))
+                page = self._get_active_page(context, page)
 
                 if self._looks_authorized(page):
                     self._stabilize_page_after_manual_login(page)
@@ -239,45 +242,26 @@ class AvitoAuthBootstrap:
         print("Сейчас сценарий рассчитан на полностью ручной вход.")
         print("После успешного входа нажмите Enter в консоли для сохранения сессии.")
 
-        def _prepare_interactive_context(self, context: BrowserContext) -> None:
-                """Делает ручную авторизацию видимой в одном окне даже если сайт пытается открыть popup."""
-                context.add_init_script(
-                        """
-                        (() => {
-                            const originalOpen = window.open.bind(window);
-                            window.open = function(url, target, features) {
-                                if (typeof url === 'string' && url.length > 0) {
-                                    window.location.assign(url);
-                                    return window;
-                                }
+    def _prepare_interactive_context(self, context: BrowserContext) -> None:
+        """Следит за новыми окнами и переносит их на передний план в VNC-сессии."""
+        context.on("page", self._focus_interactive_page)
 
-                                return originalOpen(url, target, features);
-                            };
+    def _focus_interactive_page(self, page: Page) -> None:
+        """Фокусирует новое окно авторизации, если браузер открыл отдельную страницу."""
+        try:
+            page.bring_to_front()
+        except Exception:
+            return
 
-                            document.addEventListener('click', (event) => {
-                                const element = event.target instanceof Element ? event.target.closest('a[target="_blank"]') : null;
-                                if (element) {
-                                    element.setAttribute('target', '_self');
-                                }
-                            }, true);
-
-                            document.addEventListener('submit', (event) => {
-                                const form = event.target instanceof HTMLFormElement ? event.target : null;
-                                if (form && form.getAttribute('target') === '_blank') {
-                                    form.setAttribute('target', '_self');
-                                }
-                            }, true);
-                        })();
-                        """
-                )
-                context.on("page", self._focus_interactive_page)
-
-        def _focus_interactive_page(self, page: Page) -> None:
-                """Фокусирует новое окно авторизации, если браузер всё же открыл отдельную страницу."""
-                try:
-                        page.bring_to_front()
-                except Exception:
-                        return
+    def _get_active_page(self, context: BrowserContext, fallback_page: Page) -> Page:
+        """Возвращает последнее живое окно браузера и поднимает его на передний план."""
+        pages = [page for page in context.pages if not page.is_closed()]
+        active_page = pages[-1] if pages else fallback_page
+        try:
+            active_page.bring_to_front()
+        except Exception:
+            pass
+        return active_page
 
     def _wait_for_manual_login(self, page: Page) -> None:
         """Ждёт ручной авторизации и даёт простой способ проверить результат."""
