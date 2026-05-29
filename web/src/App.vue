@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, onBeforeUnmount, ref } from 'vue'
 
 const AUTH_STORAGE_KEY = 'avito-dashboard-auth'
 const DEMO_LOGIN = 'user'
@@ -15,6 +15,9 @@ const activeView = ref('account')
 const avitoCheckPending = ref(false)
 const avitoCheckResult = ref(null)
 const avitoCheckError = ref('')
+const avitoAuthStartPending = ref(false)
+const avitoAuthFlow = ref({ status: 'idle', message: '' })
+let authPollTimer = null
 
 const menuItems = [
   { id: 'account', label: 'Аккаунт' },
@@ -51,6 +54,9 @@ function handleLogout() {
   avitoCheckPending.value = false
   avitoCheckResult.value = null
   avitoCheckError.value = ''
+  avitoAuthStartPending.value = false
+  avitoAuthFlow.value = { status: 'idle', message: '' }
+  stopAuthPolling()
   window.localStorage.removeItem(AUTH_STORAGE_KEY)
 }
 
@@ -73,6 +79,59 @@ async function checkAvitoAuthorization() {
     avitoCheckPending.value = false
   }
 }
+
+async function startAvitoAuthorization() {
+  avitoAuthStartPending.value = true
+  avitoCheckError.value = ''
+
+  try {
+    const response = await fetch('/api/avito/auth/start', { method: 'POST' })
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+
+    avitoAuthFlow.value = await response.json()
+    startAuthPolling()
+  } catch (error) {
+    avitoCheckError.value = 'Не удалось запустить интерактивную авторизацию Avito.'
+    console.error(error)
+  } finally {
+    avitoAuthStartPending.value = false
+  }
+}
+
+async function fetchAuthProgress() {
+  try {
+    const response = await fetch('/api/avito/auth/progress')
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+
+    avitoAuthFlow.value = await response.json()
+    if (!['starting', 'running'].includes(avitoAuthFlow.value.status)) {
+      stopAuthPolling()
+    }
+  } catch (error) {
+    stopAuthPolling()
+    console.error(error)
+  }
+}
+
+function startAuthPolling() {
+  stopAuthPolling()
+  authPollTimer = window.setInterval(fetchAuthProgress, 3000)
+}
+
+function stopAuthPolling() {
+  if (authPollTimer !== null) {
+    window.clearInterval(authPollTimer)
+    authPollTimer = null
+  }
+}
+
+onBeforeUnmount(() => {
+  stopAuthPolling()
+})
 </script>
 
 <template>
@@ -134,6 +193,18 @@ async function checkAvitoAuthorization() {
         </div>
 
         <div v-if="activeView === 'account'" class="account-actions">
+          <button type="button" class="primary-button action-button" @click="startAvitoAuthorization" :disabled="avitoAuthStartPending">
+            {{ avitoAuthStartPending ? 'Запускаем браузер...' : 'Авторизоваться на Avito' }}
+          </button>
+
+          <div v-if="avitoAuthFlow.status !== 'idle'" class="status-box">
+            <p class="status-line">Статус сессии авторизации: <strong>{{ avitoAuthFlow.status }}</strong></p>
+            <p class="status-line">{{ avitoAuthFlow.message }}</p>
+            <p class="status-line auth-note">
+              Браузер откроется на машине, где запущен backend. В этом окне пользователь сам проходит вход, captcha и SMS.
+            </p>
+          </div>
+
           <button type="button" class="primary-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">
             {{ avitoCheckPending ? 'Проверяем...' : 'Проверить авторизацию Avito' }}
           </button>

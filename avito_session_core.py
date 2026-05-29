@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import os
 import platform
+import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -66,6 +67,53 @@ class AvitoAuthBootstrap:
             print(f"browser profile: {self.config.user_data_dir.resolve()}")
 
             context.close()
+
+    def authorize_interactive_auto_save(
+        self,
+        timeout_seconds: int = 900,
+        poll_interval_seconds: float = 2.0,
+        progress_callback=None,
+    ) -> bool:
+        """Открывает браузер для ручного входа и автоматически сохраняет сессию после успешной авторизации.
+
+        Сценарий: пользователь сам кликает кнопку входа, вводит логин/пароль,
+        решает captcha и вводит SMS-код. Скрипт только отслеживает момент,
+        когда страница перестаёт выглядеть как неавторизованная, и сохраняет сессию.
+        """
+        self._ensure_output_dirs()
+
+        with sync_playwright() as playwright:
+            context = self._open_persistent_context(playwright)
+            page = context.pages[0] if context.pages else context.new_page()
+            page.set_default_timeout(self.config.timeout_ms)
+            page.goto(self.config.base_url, wait_until="domcontentloaded")
+            self._prepare_login_flow(page)
+
+            self._notify_progress(
+                progress_callback,
+                "running",
+                "Браузер открыт. Выполните вход на Avito в появившемся окне.",
+            )
+
+            deadline = time.time() + timeout_seconds
+            while time.time() < deadline:
+                page.wait_for_timeout(int(poll_interval_seconds * 1000))
+
+                if self._looks_authorized(page):
+                    self._stabilize_page_after_manual_login(page)
+                    self._save_session(context)
+                    context.close()
+                    self._notify_progress(
+                        progress_callback,
+                        "completed",
+                        "Авторизация завершена, данные сессии сохранены.",
+                    )
+                    return True
+
+            context.close()
+            raise TimeoutError(
+                "Время ожидания авторизации истекло. Попробуйте снова и завершите вход быстрее."
+            )
 
     def check_saved_session(self) -> bool:
         """Возвращает True, если на странице профиля прочитались имя и рейтинг."""
@@ -241,6 +289,10 @@ class AvitoAuthBootstrap:
 
         normalized_value = " ".join(value.split())
         return normalized_value or None
+
+    def _notify_progress(self, callback, status: str, message: str) -> None:
+        if callback is not None:
+            callback(status, message)
 
     def _extract_page_text(self, page: Page) -> str:
         """Возвращает очищенный текст страницы для простой диагностики."""
