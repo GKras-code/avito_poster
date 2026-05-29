@@ -2,11 +2,16 @@ FROM mcr.microsoft.com/playwright/python:v1.54.0-jammy
 
 WORKDIR /app
 
+ARG DEBIAN_FRONTEND=noninteractive
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV DISPLAY=:99
+ENV TZ=Etc/UTC
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+	&& echo $TZ > /etc/timezone \
+	&& apt-get update \
+	&& apt-get install -y --no-install-recommends \
 	fluxbox \
 	novnc \
 	x11vnc \
