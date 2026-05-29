@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import platform
+import traceback
 import zipfile
 from pathlib import Path
 
@@ -14,13 +15,28 @@ OUTPUT_DIR = Path("avito_auth_output")
 PROFILE_DIR = OUTPUT_DIR / "browser_profile"
 STORAGE_STATE_PATH = OUTPUT_DIR / "avito_storage_state.json"
 COOKIES_PATH = OUTPUT_DIR / "avito_cookies.json"
-ARCHIVE_PATH = Path("avito_auth_bundle.zip")
+ARCHIVE_PATH = OUTPUT_DIR / "avito_auth_bundle.zip"
+ERROR_LOG_PATH = OUTPUT_DIR / "avito_auth_error.log"
 
 
 def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     PROFILE_DIR.mkdir(parents=True, exist_ok=True)
 
+    try:
+        _run_auth_flow()
+        print(f"Готово. Загрузите архив на сайт: {ARCHIVE_PATH.resolve()}")
+    except Exception:
+        error_text = traceback.format_exc()
+        ERROR_LOG_PATH.write_text(error_text, encoding="utf-8")
+        print("Во время сохранения авторизации произошла ошибка.")
+        print(f"Подробности записаны в файл: {ERROR_LOG_PATH.resolve()}")
+        print(error_text)
+    finally:
+        input("Нажмите Enter, чтобы закрыть окно... ")
+
+
+def _run_auth_flow() -> None:
     print("Откроется браузер Chromium. Выполните вход на Avito вручную.")
     print("После завершения входа вернитесь в консоль и нажмите Enter.")
 
@@ -47,8 +63,6 @@ def main() -> None:
     with zipfile.ZipFile(ARCHIVE_PATH, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         archive.write(STORAGE_STATE_PATH, arcname=STORAGE_STATE_PATH.name)
         archive.write(COOKIES_PATH, arcname=COOKIES_PATH.name)
-
-    print(f"Готово. Загрузите архив на сайт: {ARCHIVE_PATH.resolve()}")
 
 
 def _launch_local_browser(playwright):

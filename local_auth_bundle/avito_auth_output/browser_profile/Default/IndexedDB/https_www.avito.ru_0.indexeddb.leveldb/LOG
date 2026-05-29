@@ -1,0 +1,11 @@
+2026/05/29-13:44:44.866 6e74 Creating DB D:\Google\WORK_python\avito_poster\local_auth_bundle\avito_auth_output\browser_profile\Default\IndexedDB\https_www.avito.ru_0.indexeddb.leveldb since it was missing.
+2026/05/29-13:44:44.869 6e74 Reusing MANIFEST D:\Google\WORK_python\avito_poster\local_auth_bundle\avito_auth_output\browser_profile\Default\IndexedDB\https_www.avito.ru_0.indexeddb.leveldb/MANIFEST-000001
+2026/05/29-13:44:44.913 6e74 Level-0 table #5: started
+2026/05/29-13:44:44.917 6e74 Level-0 table #5: 668 bytes OK
+2026/05/29-13:44:44.919 6e74 Delete type=0 #3
+2026/05/29-13:44:44.919 ce8 Manual compaction at level-0 from '\x00\x01\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x02\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/05/29-13:45:09.794 6e74 Manual compaction at level-0 from '\x00\x0a\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0b\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/05/29-13:45:12.208 6e74 Level-0 table #7: started
+2026/05/29-13:45:12.211 6e74 Level-0 table #7: 7808 bytes OK
+2026/05/29-13:45:12.213 6e74 Delete type=0 #4
+2026/05/29-13:45:12.213 6e74 Manual compaction at level-0 from '\x00\x0b\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00\x0c\x00\x00\x00' @ 0 : 0; will stop at (end)
