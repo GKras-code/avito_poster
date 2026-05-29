@@ -145,24 +145,12 @@ async function checkAvitoAuthorization() {
               Авторизован:
               <strong>{{ avitoCheckResult.authorized ? 'true' : 'false' }}</strong>
             </p>
-            <p v-if="avitoCheckResult.page_title" class="status-line">
-              Заголовок страницы: <strong>{{ avitoCheckResult.page_title }}</strong>
-            </p>
-            <p v-if="avitoCheckResult.page_url" class="status-line">
-              URL: <strong>{{ avitoCheckResult.page_url }}</strong>
-            </p>
             <p v-if="avitoCheckResult.display_name" class="status-line">
               Имя профиля: <strong>{{ avitoCheckResult.display_name }}</strong>
             </p>
             <p v-if="avitoCheckResult.rating_value" class="status-line">
               Рейтинг: <strong>{{ avitoCheckResult.rating_value }}</strong>
             </p>
-            <img
-              v-if="avitoCheckResult.screenshot_base64"
-              class="browser-preview"
-              :src="`data:image/jpeg;base64,${avitoCheckResult.screenshot_base64}`"
-              alt="Скриншот страницы Avito во время проверки"
-            />
           </div>
         </div>
 
