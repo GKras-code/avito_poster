@@ -3,8 +3,6 @@ from __future__ import annotations
 import json
 import os
 import platform
-import shutil
-import time
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
@@ -54,12 +52,9 @@ class AvitoAuthBootstrap:
 
         with sync_playwright() as playwright:
             context = self._open_persistent_context(playwright)
-            self._sync_persistent_context_with_saved_session(context)
-            self._prepare_interactive_context(context)
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
-            page.goto(self._get_interactive_start_url(), wait_until="domcontentloaded")
-            page = self._get_active_page(context, page)
+            page.goto(self.config.base_url, wait_until="domcontentloaded")
 
             self._prepare_login_flow(page)
             self._wait_for_manual_login(page)
@@ -71,57 +66,6 @@ class AvitoAuthBootstrap:
             print(f"browser profile: {self.config.user_data_dir.resolve()}")
 
             context.close()
-
-    def authorize_interactive_auto_save(
-        self,
-        timeout_seconds: int = 900,
-        poll_interval_seconds: float = 2.0,
-        progress_callback=None,
-    ) -> bool:
-        """Открывает браузер для ручного входа и автоматически сохраняет сессию после успешной авторизации.
-
-        Сценарий: пользователь сам кликает кнопку входа, вводит логин/пароль,
-        решает captcha и вводит SMS-код. Скрипт только отслеживает момент,
-        когда страница перестаёт выглядеть как неавторизованная, и сохраняет сессию.
-        """
-        self._ensure_output_dirs()
-
-        with sync_playwright() as playwright:
-            context = self._open_persistent_context(playwright)
-            self._sync_persistent_context_with_saved_session(context)
-            self._prepare_interactive_context(context)
-            page = context.pages[0] if context.pages else context.new_page()
-            page.set_default_timeout(self.config.timeout_ms)
-            page.goto(self._get_interactive_start_url(), wait_until="domcontentloaded")
-            page = self._get_active_page(context, page)
-            self._prepare_login_flow(page)
-
-            self._notify_progress(
-                progress_callback,
-                "running",
-                "Браузер открыт. Выполните вход на Avito в появившемся окне.",
-            )
-
-            deadline = time.time() + timeout_seconds
-            while time.time() < deadline:
-                page.wait_for_timeout(int(poll_interval_seconds * 1000))
-                page = self._get_active_page(context, page)
-
-                if self._looks_authorized(page):
-                    self._stabilize_page_after_manual_login(page)
-                    self._save_session(context)
-                    context.close()
-                    self._notify_progress(
-                        progress_callback,
-                        "completed",
-                        "Авторизация завершена, данные сессии сохранены.",
-                    )
-                    return True
-
-            context.close()
-            raise TimeoutError(
-                "Время ожидания авторизации истекло. Попробуйте снова и завершите вход быстрее."
-            )
 
     def check_saved_session(self) -> bool:
         """Возвращает True, если на странице профиля прочитались имя и рейтинг."""
@@ -215,26 +159,16 @@ class AvitoAuthBootstrap:
         launch_kwargs = {
             "headless": self.config.headless,
             "slow_mo": self.config.slow_mo_ms,
-            "args": ["--disable-gpu"],
         }
 
         if self.config.browser_channel:
             launch_kwargs["channel"] = self.config.browser_channel
 
-        try:
-            context = playwright.chromium.launch_persistent_context(
-                user_data_dir=str(self.config.user_data_dir),
-                locale="ru-RU",
-                **launch_kwargs,
-            )
-        except Exception:
-            self._reset_persistent_profile_dir()
-            context = playwright.chromium.launch_persistent_context(
-                user_data_dir=str(self.config.user_data_dir),
-                locale="ru-RU",
-                **launch_kwargs,
-            )
-
+        context = playwright.chromium.launch_persistent_context(
+            user_data_dir=str(self.config.user_data_dir),
+            locale="ru-RU",
+            **launch_kwargs,
+        )
         context.set_default_timeout(self.config.timeout_ms)
         return context
 
@@ -243,77 +177,6 @@ class AvitoAuthBootstrap:
         print("Открыта главная страница Avito в постоянном профиле браузера.")
         print("Сейчас сценарий рассчитан на полностью ручной вход.")
         print("После успешного входа нажмите Enter в консоли для сохранения сессии.")
-
-    def _prepare_interactive_context(self, context: BrowserContext) -> None:
-        """Следит за новыми окнами и переносит их на передний план в VNC-сессии."""
-        context.on("page", self._focus_interactive_page)
-
-    def _get_interactive_start_url(self) -> str:
-        """Открывает профиль, если сохранённая сессия уже есть; иначе обычную главную страницу."""
-        if self.config.storage_state_path.exists():
-            return f"{self.config.base_url.rstrip('/')}/profile"
-
-        return self.config.base_url
-
-    def _sync_persistent_context_with_saved_session(self, context: BrowserContext) -> None:
-        """Подмешивает уже сохранённую сессию в persistent browser, чтобы UI и проверка видели одно состояние."""
-        storage_state_path = self.config.storage_state_path
-        if not storage_state_path.exists():
-            return
-
-        state = json.loads(storage_state_path.read_text(encoding="utf-8"))
-        cookies = state.get("cookies") or []
-        origins = state.get("origins") or []
-
-        if cookies:
-            context.clear_cookies()
-            context.add_cookies(cookies)
-
-        if not origins:
-            return
-
-        page = context.pages[0] if context.pages else context.new_page()
-        page.set_default_timeout(self.config.timeout_ms)
-
-        for origin_state in origins:
-            origin = origin_state.get("origin")
-            local_storage_items = origin_state.get("localStorage") or []
-            if not origin or not local_storage_items:
-                continue
-
-            try:
-                page.goto(origin, wait_until="domcontentloaded")
-                page.evaluate(
-                    """
-                    (items) => {
-                        for (const item of items) {
-                            if (item && typeof item.name === 'string') {
-                                window.localStorage.setItem(item.name, item.value ?? '');
-                            }
-                        }
-                    }
-                    """,
-                    local_storage_items,
-                )
-            except Exception:
-                continue
-
-    def _focus_interactive_page(self, page: Page) -> None:
-        """Фокусирует новое окно авторизации, если браузер открыл отдельную страницу."""
-        try:
-            page.bring_to_front()
-        except Exception:
-            return
-
-    def _get_active_page(self, context: BrowserContext, fallback_page: Page) -> Page:
-        """Возвращает последнее живое окно браузера и поднимает его на передний план."""
-        pages = [page for page in context.pages if not page.is_closed()]
-        active_page = pages[-1] if pages else fallback_page
-        try:
-            active_page.bring_to_front()
-        except Exception:
-            pass
-        return active_page
 
     def _wait_for_manual_login(self, page: Page) -> None:
         """Ждёт ручной авторизации и даёт простой способ проверить результат."""
@@ -379,10 +242,6 @@ class AvitoAuthBootstrap:
         normalized_value = " ".join(value.split())
         return normalized_value or None
 
-    def _notify_progress(self, callback, status: str, message: str) -> None:
-        if callback is not None:
-            callback(status, message)
-
     def _extract_page_text(self, page: Page) -> str:
         """Возвращает очищенный текст страницы для простой диагностики."""
         body = page.locator("body")
@@ -407,13 +266,6 @@ class AvitoAuthBootstrap:
     def _ensure_output_dirs(self) -> None:
         self.config.storage_state_path.parent.mkdir(parents=True, exist_ok=True)
         self.config.cookies_path.parent.mkdir(parents=True, exist_ok=True)
-
-    def _reset_persistent_profile_dir(self) -> None:
-        """Удаляет повреждённый профиль браузера и создаёт новый пустой каталог."""
-        profile_dir = self.config.user_data_dir
-        if profile_dir.exists():
-            shutil.rmtree(profile_dir, ignore_errors=True)
-        profile_dir.mkdir(parents=True, exist_ok=True)
 
 
 def build_config_from_env() -> AvitoAuthConfig:

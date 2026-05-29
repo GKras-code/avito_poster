@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onBeforeUnmount, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 const AUTH_STORAGE_KEY = 'avito-dashboard-auth'
 const DEMO_LOGIN = 'user'
@@ -15,10 +15,10 @@ const activeView = ref('account')
 const avitoCheckPending = ref(false)
 const avitoCheckResult = ref(null)
 const avitoCheckError = ref('')
-const avitoAuthStartPending = ref(false)
-const avitoAuthFlow = ref({ status: 'idle', message: '' })
-let authPollTimer = null
-const embeddedBrowserUrl = '/browser/vnc.html?autoconnect=1&resize=scale&path=/browser/websockify&logging=debug'
+const avitoUploadPending = ref(false)
+const avitoUploadError = ref('')
+const avitoUploadMessage = ref('')
+const avitoArchiveFile = ref(null)
 
 const menuItems = [
   { id: 'account', label: 'Аккаунт' },
@@ -55,10 +55,60 @@ function handleLogout() {
   avitoCheckPending.value = false
   avitoCheckResult.value = null
   avitoCheckError.value = ''
-  avitoAuthStartPending.value = false
-  avitoAuthFlow.value = { status: 'idle', message: '' }
-  stopAuthPolling()
+  avitoUploadPending.value = false
+  avitoUploadError.value = ''
+  avitoUploadMessage.value = ''
+  avitoArchiveFile.value = null
   window.localStorage.removeItem(AUTH_STORAGE_KEY)
+}
+
+function downloadAvitoAuthPackage() {
+  const link = document.createElement('a')
+  link.href = '/api/avito/auth-package/download'
+  link.download = 'avito-local-auth-bundle.zip'
+  document.body.append(link)
+  link.click()
+  link.remove()
+}
+
+function handleAvitoArchiveChange(event) {
+  const [file] = event.target.files ?? []
+  avitoArchiveFile.value = file ?? null
+  avitoUploadError.value = ''
+  avitoUploadMessage.value = file ? `Выбран архив: ${file.name}` : ''
+}
+
+async function uploadAvitoAuthArchive() {
+  if (!avitoArchiveFile.value) {
+    avitoUploadError.value = 'Сначала выберите zip-архив с локальной авторизацией Avito.'
+    return
+  }
+
+  avitoUploadPending.value = true
+  avitoUploadError.value = ''
+  avitoUploadMessage.value = ''
+
+  try {
+    const formData = new FormData()
+    formData.append('file', avitoArchiveFile.value)
+
+    const response = await fetch('/api/avito/auth-package/upload', {
+      method: 'POST',
+      body: formData,
+    })
+    const payload = await response.json()
+    if (!response.ok) {
+      throw new Error(payload.detail || payload.message || `HTTP ${response.status}`)
+    }
+
+    avitoUploadMessage.value = payload.message
+    await checkAvitoAuthorization()
+  } catch (error) {
+    avitoUploadError.value = error.message || 'Не удалось загрузить архив авторизации.'
+    console.error(error)
+  } finally {
+    avitoUploadPending.value = false
+  }
 }
 
 async function checkAvitoAuthorization() {
@@ -72,7 +122,6 @@ async function checkAvitoAuthorization() {
     }
 
     avitoCheckResult.value = await response.json()
-    avitoCheckError.value = ''
   } catch (error) {
     avitoCheckResult.value = null
     avitoCheckError.value = 'Не удалось получить ответ от FastAPI сервера.'
@@ -81,59 +130,6 @@ async function checkAvitoAuthorization() {
     avitoCheckPending.value = false
   }
 }
-
-async function startAvitoAuthorization() {
-  avitoAuthStartPending.value = true
-  avitoCheckError.value = ''
-
-  try {
-    const response = await fetch('/api/avito/auth/start', { method: 'POST' })
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`)
-    }
-
-    avitoAuthFlow.value = await response.json()
-    startAuthPolling()
-  } catch (error) {
-    avitoCheckError.value = 'Не удалось запустить интерактивную авторизацию Avito.'
-    console.error(error)
-  } finally {
-    avitoAuthStartPending.value = false
-  }
-}
-
-async function fetchAuthProgress() {
-  try {
-    const response = await fetch('/api/avito/auth/progress')
-    if (!response.ok) {
-      throw new Error(`HTTP ${response.status}`)
-    }
-
-    avitoAuthFlow.value = await response.json()
-    if (!['starting', 'running'].includes(avitoAuthFlow.value.status)) {
-      stopAuthPolling()
-    }
-  } catch (error) {
-    stopAuthPolling()
-    console.error(error)
-  }
-}
-
-function startAuthPolling() {
-  stopAuthPolling()
-  authPollTimer = window.setInterval(fetchAuthProgress, 3000)
-}
-
-function stopAuthPolling() {
-  if (authPollTimer !== null) {
-    window.clearInterval(authPollTimer)
-    authPollTimer = null
-  }
-}
-
-onBeforeUnmount(() => {
-  stopAuthPolling()
-})
 </script>
 
 <template>
@@ -195,35 +191,45 @@ onBeforeUnmount(() => {
         </div>
 
         <div v-if="activeView === 'account'" class="account-actions">
-          <button type="button" class="primary-button action-button" @click="startAvitoAuthorization" :disabled="avitoAuthStartPending">
-            {{ avitoAuthStartPending ? 'Запускаем браузер...' : 'Авторизоваться на Avito' }}
-          </button>
-
-          <div v-if="avitoAuthFlow.status !== 'idle'" class="status-box">
-            <p class="status-line">Статус сессии авторизации: <strong>{{ avitoAuthFlow.status }}</strong></p>
-            <p class="status-line">{{ avitoAuthFlow.message }}</p>
-            <p class="status-line auth-note">
-              Ниже открыт браузер backend-сессии. В нём пользователь сам проходит вход, captcha и SMS.
+          <div class="flow-card">
+            <p class="status-label">Локальная авторизация</p>
+            <h3>Авторизоваться на Avito</h3>
+            <p class="flow-text">
+              Более рациональный поток: пользователь входит в Avito на своём компьютере,
+              а сайт получает только готовую сессию в архиве.
             </p>
-          </div>
 
-          <div v-if="avitoAuthFlow.status !== 'idle'" class="browser-box">
-            <div class="browser-box-head">
-              <strong>Окно браузера авторизации</strong>
-              <a class="browser-link" :href="embeddedBrowserUrl" target="_blank" rel="noopener noreferrer">
-                Открыть в новой вкладке
-              </a>
+            <div class="flow-actions">
+              <button type="button" class="primary-button action-button" @click="downloadAvitoAuthPackage">
+                Авторизоваться на Avito
+              </button>
+
+              <button type="button" class="ghost-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">
+                {{ avitoCheckPending ? 'Проверяем...' : 'Проверить авторизацию Avito' }}
+              </button>
             </div>
-            <iframe
-              class="browser-frame"
-              :src="embeddedBrowserUrl"
-              title="Avito auth browser"
-            />
+
+            <ol class="helper-list">
+              <li>Скачайте архив со скриптом по кнопке выше.</li>
+              <li>Запустите локально `python avito_local_auth.py` и войдите в Avito в открывшемся браузере.</li>
+              <li>После входа нажмите Enter в консоли. Скрипт создаст `avito_auth_bundle.zip`.</li>
+              <li>Загрузите этот архив ниже на сайт.</li>
+            </ol>
           </div>
 
-          <button type="button" class="primary-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">
-            {{ avitoCheckPending ? 'Проверяем...' : 'Проверить авторизацию Avito' }}
-          </button>
+          <div class="upload-panel">
+            <label class="upload-field">
+              <span>Загрузить архив авторизации</span>
+              <input type="file" accept=".zip,application/zip" @change="handleAvitoArchiveChange" />
+            </label>
+
+            <button type="button" class="primary-button action-button" @click="uploadAvitoAuthArchive" :disabled="avitoUploadPending">
+              {{ avitoUploadPending ? 'Загружаем...' : 'Загрузить архив авторизации' }}
+            </button>
+
+            <p v-if="avitoUploadMessage" class="upload-message">{{ avitoUploadMessage }}</p>
+            <p v-if="avitoUploadError" class="auth-error">{{ avitoUploadError }}</p>
+          </div>
 
           <p v-if="avitoCheckError" class="auth-error">{{ avitoCheckError }}</p>
 

@@ -1,13 +1,30 @@
 from __future__ import annotations
 
-import os
-import platform
-import threading
+import io
+import json
+import zipfile
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi import File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 from pydantic import BaseModel
 
 from avito_session_core import AvitoAuthBootstrap, build_config_from_env
+
+
+ROOT_DIR = Path(__file__).resolve().parent
+LOCAL_AUTH_BUNDLE_DIR = ROOT_DIR / "local_auth_bundle"
+LOCAL_AUTH_BUNDLE_FILES = [
+    "avito_local_auth.py",
+    "requirements.txt",
+    "README.md",
+]
+EXPECTED_AUTH_ARCHIVE_FILES = {
+    "avito_storage_state.json",
+    "avito_cookies.json",
+}
 
 
 class AvitoAuthStatusResponse(BaseModel):
@@ -17,10 +34,9 @@ class AvitoAuthStatusResponse(BaseModel):
     message: str | None = None
 
 
-class AvitoInteractiveAuthResponse(BaseModel):
-    status: str
+class AvitoSessionUploadResponse(BaseModel):
+    success: bool
     message: str
-    authorized: bool = False
 
 
 app = FastAPI(title="Avito Poster API", version="0.1.0")
@@ -32,76 +48,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-class InteractiveAuthManager:
-    def __init__(self) -> None:
-        self._lock = threading.Lock()
-        self._thread: threading.Thread | None = None
-        self._status = "idle"
-        self._message = "Авторизация ещё не запускалась."
-        self._authorized = False
-
-    def start(self) -> AvitoInteractiveAuthResponse:
-        with self._lock:
-            if self._thread is not None and self._thread.is_alive():
-                return self.snapshot()
-
-            if self._display_is_required_but_missing():
-                self._status = "error"
-                self._message = (
-                    "Backend запущен без графического DISPLAY. Для интерактивной авторизации нужен браузер на хосте backend "
-                    "или отдельный VNC/noVNC слой."
-                )
-                self._authorized = False
-                return self.snapshot()
-
-            self._status = "starting"
-            self._message = "Подготавливаем браузер для авторизации Avito."
-            self._authorized = False
-            self._thread = threading.Thread(target=self._run_flow, daemon=True)
-            self._thread.start()
-            return self.snapshot()
-
-    def snapshot(self) -> AvitoInteractiveAuthResponse:
-        return AvitoInteractiveAuthResponse(
-            status=self._status,
-            message=self._message,
-            authorized=self._authorized,
-        )
-
-    def _run_flow(self) -> None:
-        try:
-            config = build_config_from_env()
-            config.headless = False
-            bootstrap = AvitoAuthBootstrap(config)
-            bootstrap.authorize_interactive_auto_save(progress_callback=self._set_status)
-
-            snapshot = bootstrap.read_profile_snapshot()
-            authorized = bool(snapshot and snapshot.display_name and snapshot.rating_value)
-            with self._lock:
-                self._status = "completed"
-                self._message = "Сессия Avito сохранена и готова к использованию."
-                self._authorized = authorized
-        except Exception as error:
-            with self._lock:
-                self._status = "error"
-                self._message = str(error)
-                self._authorized = False
-
-    def _set_status(self, status: str, message: str) -> None:
-        with self._lock:
-            self._status = status
-            self._message = message
-
-    def _display_is_required_but_missing(self) -> bool:
-        if platform.system().lower() != "linux":
-            return False
-
-        return not bool(os.getenv("DISPLAY") or os.getenv("WAYLAND_DISPLAY"))
-
-
-interactive_auth_manager = InteractiveAuthManager()
 
 
 @app.get("/api/health")
@@ -118,8 +64,8 @@ def avito_auth_status() -> AvitoAuthStatusResponse:
         return AvitoAuthStatusResponse(
             authorized=False,
             message=(
-                "Данные авторизации Avito ещё не сохранены. Сначала нажмите кнопку "
-                "'Авторизоваться на Avito', завершите вход и дождитесь сохранения сессии."
+                "Данные авторизации Avito ещё не загружены. Нажмите 'Авторизоваться на Avito', "
+                "скачайте локальный скрипт, выполните вход и загрузите архив обратно на сайт."
             ),
         )
     except Exception as error:
@@ -131,10 +77,7 @@ def avito_auth_status() -> AvitoAuthStatusResponse:
     if snapshot is None:
         return AvitoAuthStatusResponse(
             authorized=False,
-            message=(
-                "Сессия Avito не подтверждена. Если вы ещё не входили, нажмите "
-                "'Авторизоваться на Avito' и пройдите вход в браузере."
-            ),
+            message="Сессия Avito не подтверждена. Загрузите новый архив авторизации.",
         )
 
     authorized = bool(snapshot.display_name and snapshot.rating_value)
@@ -148,11 +91,68 @@ def avito_auth_status() -> AvitoAuthStatusResponse:
     )
 
 
-@app.post("/api/avito/auth/start", response_model=AvitoInteractiveAuthResponse)
-def start_avito_auth() -> AvitoInteractiveAuthResponse:
-    return interactive_auth_manager.start()
+@app.get("/api/avito/auth-package/download")
+def download_avito_auth_package() -> StreamingResponse:
+    missing_files = [name for name in LOCAL_AUTH_BUNDLE_FILES if not (LOCAL_AUTH_BUNDLE_DIR / name).exists()]
+    if missing_files:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Пакет локальной авторизации неполон: {', '.join(missing_files)}",
+        )
+
+    archive_buffer = io.BytesIO()
+    with zipfile.ZipFile(archive_buffer, "w", compression=zipfile.ZIP_DEFLATED) as archive:
+        for file_name in LOCAL_AUTH_BUNDLE_FILES:
+            archive.write(LOCAL_AUTH_BUNDLE_DIR / file_name, arcname=file_name)
+
+    archive_buffer.seek(0)
+    headers = {"Content-Disposition": 'attachment; filename="avito-local-auth-bundle.zip"'}
+    return StreamingResponse(archive_buffer, media_type="application/zip", headers=headers)
 
 
-@app.get("/api/avito/auth/progress", response_model=AvitoInteractiveAuthResponse)
-def avito_auth_progress() -> AvitoInteractiveAuthResponse:
-    return interactive_auth_manager.snapshot()
+@app.post("/api/avito/auth-package/upload", response_model=AvitoSessionUploadResponse)
+async def upload_avito_auth_package(file: UploadFile = File(...)) -> AvitoSessionUploadResponse:
+    if not file.filename or not file.filename.lower().endswith(".zip"):
+        raise HTTPException(status_code=400, detail="Нужен zip-архив с локальной сессией Avito.")
+
+    archive_bytes = await file.read()
+    try:
+        archive = zipfile.ZipFile(io.BytesIO(archive_bytes))
+    except zipfile.BadZipFile as error:
+        raise HTTPException(status_code=400, detail="Файл не является корректным zip-архивом.") from error
+
+    extracted_files: dict[str, bytes] = {}
+    with archive:
+        for entry in archive.infolist():
+            if entry.is_dir():
+                continue
+
+            target_name = Path(entry.filename).name
+            if target_name in EXPECTED_AUTH_ARCHIVE_FILES and target_name not in extracted_files:
+                extracted_files[target_name] = archive.read(entry)
+
+    missing_files = EXPECTED_AUTH_ARCHIVE_FILES.difference(extracted_files)
+    if missing_files:
+        raise HTTPException(
+            status_code=400,
+            detail=f"В архиве не хватает файлов авторизации: {', '.join(sorted(missing_files))}",
+        )
+
+    for json_file_name, json_bytes in extracted_files.items():
+        try:
+            json.loads(json_bytes.decode("utf-8"))
+        except Exception as error:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Файл {json_file_name} содержит некорректный JSON.",
+            ) from error
+
+    config = build_config_from_env()
+    config.storage_state_path.parent.mkdir(parents=True, exist_ok=True)
+    config.storage_state_path.write_bytes(extracted_files["avito_storage_state.json"])
+    config.cookies_path.write_bytes(extracted_files["avito_cookies.json"])
+
+    return AvitoSessionUploadResponse(
+        success=True,
+        message="Архив авторизации загружен. Теперь можно проверить сессию Avito на сервере.",
+    )
