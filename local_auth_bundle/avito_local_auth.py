@@ -33,7 +33,7 @@ def main() -> None:
         print(f"Подробности записаны в файл: {ERROR_LOG_PATH.resolve()}")
         print(error_text)
     finally:
-        input("Нажмите Enter, чтобы закрыть окно... ")
+        _wait_until_user_closes_console()
 
 
 def _run_auth_flow() -> None:
@@ -92,6 +92,17 @@ def _preferred_browser_channels() -> list[str]:
         return ["msedge", "chrome"]
 
     return ["chrome"]
+
+
+def _wait_until_user_closes_console() -> None:
+    print()
+    print("Консоль останется открытой.")
+    print("Скопируйте текст выше. Когда закончите, введите close и нажмите Enter.")
+
+    while True:
+        user_input = input("> ").strip().lower()
+        if user_input in {"close", "exit", "закрыть"}:
+            return
 
 
 if __name__ == "__main__":
