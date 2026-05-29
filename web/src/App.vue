@@ -18,7 +18,7 @@ const avitoCheckError = ref('')
 const avitoAuthStartPending = ref(false)
 const avitoAuthFlow = ref({ status: 'idle', message: '' })
 let authPollTimer = null
-const embeddedBrowserUrl = '/browser/vnc.html?autoconnect=1&resize=scale'
+const embeddedBrowserUrl = '/browser/vnc.html?autoconnect=1&resize=scale&path=/browser/websockify&logging=debug'
 
 const menuItems = [
   { id: 'account', label: 'Аккаунт' },
