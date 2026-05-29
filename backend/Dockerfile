@@ -11,6 +11,9 @@ ENV TZ=Etc/UTC
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
 	&& echo $TZ > /etc/timezone \
 	&& apt-get update \
+	&& apt-get install -y --no-install-recommends software-properties-common \
+	&& add-apt-repository universe \
+	&& apt-get update \
 	&& apt-get install -y --no-install-recommends \
 	fluxbox \
 	novnc \
