@@ -54,6 +54,7 @@ class AvitoAuthBootstrap:
 
         with sync_playwright() as playwright:
             context = self._open_persistent_context(playwright)
+            self._prepare_interactive_context(context)
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
             page.goto(self.config.base_url, wait_until="domcontentloaded")
@@ -85,6 +86,7 @@ class AvitoAuthBootstrap:
 
         with sync_playwright() as playwright:
             context = self._open_persistent_context(playwright)
+            self._prepare_interactive_context(context)
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
             page.goto(self.config.base_url, wait_until="domcontentloaded")
@@ -236,6 +238,46 @@ class AvitoAuthBootstrap:
         print("Открыта главная страница Avito в постоянном профиле браузера.")
         print("Сейчас сценарий рассчитан на полностью ручной вход.")
         print("После успешного входа нажмите Enter в консоли для сохранения сессии.")
+
+        def _prepare_interactive_context(self, context: BrowserContext) -> None:
+                """Делает ручную авторизацию видимой в одном окне даже если сайт пытается открыть popup."""
+                context.add_init_script(
+                        """
+                        (() => {
+                            const originalOpen = window.open.bind(window);
+                            window.open = function(url, target, features) {
+                                if (typeof url === 'string' && url.length > 0) {
+                                    window.location.assign(url);
+                                    return window;
+                                }
+
+                                return originalOpen(url, target, features);
+                            };
+
+                            document.addEventListener('click', (event) => {
+                                const element = event.target instanceof Element ? event.target.closest('a[target="_blank"]') : null;
+                                if (element) {
+                                    element.setAttribute('target', '_self');
+                                }
+                            }, true);
+
+                            document.addEventListener('submit', (event) => {
+                                const form = event.target instanceof HTMLFormElement ? event.target : null;
+                                if (form && form.getAttribute('target') === '_blank') {
+                                    form.setAttribute('target', '_self');
+                                }
+                            }, true);
+                        })();
+                        """
+                )
+                context.on("page", self._focus_interactive_page)
+
+        def _focus_interactive_page(self, page: Page) -> None:
+                """Фокусирует новое окно авторизации, если браузер всё же открыл отдельную страницу."""
+                try:
+                        page.bring_to_front()
+                except Exception:
+                        return
 
     def _wait_for_manual_login(self, page: Page) -> None:
         """Ждёт ручной авторизации и даёт простой способ проверить результат."""
