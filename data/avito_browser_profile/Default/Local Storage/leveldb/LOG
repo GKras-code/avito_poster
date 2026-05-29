@@ -1,5 +1,6 @@
-2026/05/29-10:53:50.060 770 Creating DB D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\Local Storage\leveldb since it was missing.
-2026/05/29-10:53:50.073 770 Reusing MANIFEST D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
-2026/05/29-10:54:50.092 2584 Level-0 table #5: started
-2026/05/29-10:54:50.102 2584 Level-0 table #5: 57163 bytes OK
-2026/05/29-10:54:50.106 2584 Delete type=0 #3
+2026/05/29-12:15:07.924 1fc4 Reusing MANIFEST D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\Local Storage\leveldb/MANIFEST-000001
+2026/05/29-12:15:07.929 1fc4 Recovering log #4
+2026/05/29-12:15:07.930 1fc4 Reusing old log D:\Google\WORK_python\avito_poster\data\avito_browser_profile\Default\Local Storage\leveldb/000004.log 
+2026/05/29-12:16:07.941 1a58 Level-0 table #8: started
+2026/05/29-12:16:07.947 1a58 Level-0 table #8: 57308 bytes OK
+2026/05/29-12:16:07.949 1a58 Delete type=0 #4

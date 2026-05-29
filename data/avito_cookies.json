@@ -1,0 +1,1632 @@
+[
+  {
+    "name": "idntfy",
+    "value": "VUdLvtteUqzN7UT",
+    "domain": ".traffaret.com",
+    "path": "/core/",
+    "expires": 1814606182.931023,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "as",
+    "value": "MHDjU2oZRhNPvYwXahlGEg",
+    "domain": "kimberlite.io",
+    "path": "/rtb",
+    "expires": 1780646035.307071,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "f",
+    "value": "",
+    "domain": "kimberlite.io",
+    "path": "/rtb",
+    "expires": 1780046211.636963,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "n",
+    "value": "1",
+    "domain": "kimberlite.io",
+    "path": "/rtb",
+    "expires": 1780046211.637004,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "da",
+    "value": "wWA0DgAAAAHGhwSyAAAAAb846ZQAAAAB",
+    "domain": "kimberlite.io",
+    "path": "/rtb",
+    "expires": 1780650981.728143,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "idntfy",
+    "value": "VUdLvtteUqzN7UT",
+    "domain": ".traffaret.com",
+    "path": "/c/",
+    "expires": 1814606182.930832,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "srv_id",
+    "value": "zT0OfG4rElQ9k7-r.U14HX7lUXvBsxLmai-Bpr73atO-Mwx_vyG06wrQ6Ll2UnPmgGAfAL8964J0oHk86L2Rn.ipfPi_K8X5gBAce2shNvqzlmk3XvMu5xXZbGZiZqFvg=.web",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601230.608616,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "gMltIuegZN2COuSe",
+    "value": "EOFGWsm50bhh17prLqaIgdir1V0kgrvN",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780132581.132336,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "u",
+    "value": "3booa93q.pkinc7.et9n99wyav00",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601230.608731,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "h_u",
+    "value": "91919613b0145c50:1780041180",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601230.608794,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_gcl_au",
+    "value": "1.1.1717374249.1780041232",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1787817232,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga",
+    "value": "GA1.1.646268284.1780041232",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606170.466544,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "ma_cid",
+    "value": "1780041232237425638",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582170.480996,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "ma_id",
+    "value": "5181644181780041231880",
+    "domain": ".mts.ru",
+    "path": "/",
+    "expires": 1814601232.157515,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "pi",
+    "value": "kHMR7XczKpSVVnYNutOM9osaO1L+B7gJ4HLt7FIEWK2bRO2pamzRCkwlyRBWf0bGKrp+mbeve5PjxCkw//xks8XVprM=",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1814601232.188088,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "partitionKey": "https://avito.ru",
+    "_crHasCrossSiteAncestor": true
+  },
+  {
+    "name": "i",
+    "value": "LfVozm+CpkDMPIH4wW7dAz2b7uFzbN88vh8ltObwJfdNu5sMXlPrHKmpoakZy5gxnc+QR4EhMMVfgIXrjbRHJn7zDAY=",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1814601232.188152,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "yandexuid",
+    "value": "8018444771780041231",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1814601232.800096,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "yashr",
+    "value": "5860317861780041231",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1811577231,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "partitionKey": "https://avito.ru",
+    "_crHasCrossSiteAncestor": true
+  },
+  {
+    "name": "dspid",
+    "value": "a6d818f0-b1b3-4f5f-897e-5ab339dcd268",
+    "domain": ".mts.ru",
+    "path": "/",
+    "expires": 1810799632.246275,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "reset_cookie",
+    "value": "1",
+    "domain": ".mts.ru",
+    "path": "/",
+    "expires": 1810799632.24633,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cid",
+    "value": "AhFzWtSt3V2Pks3bDm1vw-A",
+    "domain": ".adriver.ru",
+    "path": "/",
+    "expires": 1814606184.314879,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_ym_uid",
+    "value": "1780041233183698287",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811577232,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_ym_d",
+    "value": "1780041233",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811577232,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adrdel",
+    "value": "1780041232748",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1814601232.748334,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adrdel",
+    "value": "1780041232748",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601232.748509,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adrcid",
+    "value": "AhFzWtSt3V2Pks3bDm1vw-A",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1814606170.540689,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adrcid",
+    "value": "AhFzWtSt3V2Pks3bDm1vw-A",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606170.540806,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "yuidss",
+    "value": "8018444771780041231",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1814601232.800157,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ymex",
+    "value": "2095401232.yrts.1780041232",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1811577232,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "receive-cookie-deprecation",
+    "value": "1",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1811582172,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "partitionKey": "https://avito.ru",
+    "_crHasCrossSiteAncestor": true
+  },
+  {
+    "name": "cookie_consent_shown",
+    "value": "1",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1785225232,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ym_isad",
+    "value": "2",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780113232,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "acs_3",
+    "value": "%7B%22hash%22%3A%221aa3f9523ee6c2690cb34fc702d4143056487c0d%22%2C%22nst%22%3A1780127632884%2C%22sl%22%3A%7B%22224%22%3A1780041232884%2C%221228%22%3A1780041232884%7D%7D",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1814601232.88537,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "acs_3",
+    "value": "%7B%22hash%22%3A%221aa3f9523ee6c2690cb34fc702d4143056487c0d%22%2C%22nst%22%3A1780127632884%2C%22sl%22%3A%7B%22224%22%3A1780041232884%2C%221228%22%3A1780041232884%7D%7D",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601232.885509,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "buyer_laas_location",
+    "value": "659300",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582172.10687,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "luri",
+    "value": "izhevsk",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780127633.682625,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "buyer_location_id",
+    "value": "659300",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582172.107709,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "tmr_lvid",
+    "value": "b1accf8bc4ae26020d33f77ee183d9ca",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1808817372,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "tmr_lvidTS",
+    "value": "1780041233821",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1808817372,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "__upin",
+    "value": "zrHJNnlHu8pFzIKfXJ5lYg",
+    "domain": ".aidata.io",
+    "path": "/",
+    "expires": 1814606181.708,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "__upints",
+    "value": "1780041233",
+    "domain": ".aidata.io",
+    "path": "/",
+    "expires": 1814606181.708228,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "viuserid",
+    "value": "mGxc4bZzqjwuoDA7KmNB",
+    "domain": ".dmg.digitaltarget.ru",
+    "path": "/",
+    "expires": 1814601233.941899,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ruid",
+    "value": "hBQAABFGGWoBABusAzMv9wB=",
+    "domain": ".rambler.ru",
+    "path": "/",
+    "expires": 1814601233.955114,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "proto_uid",
+    "value": "hBQAABFGGWoBABusAzMv9wB=",
+    "domain": ".rambler.ru",
+    "path": "/",
+    "expires": 1814601233.95522,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "AFFICHE_W",
+    "value": "4Uv1OelGTdLh18",
+    "domain": ".weborama-tech.ru",
+    "path": "/",
+    "expires": 1813996433.965456,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "gi",
+    "value": "1",
+    "domain": "x01.aidata.io",
+    "path": "/",
+    "expires": 1780300433.965779,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "gi_u",
+    "value": "u5mE1D4H8ITE.AikABlGecrm1XA",
+    "domain": ".adhigh.net",
+    "path": "/",
+    "expires": 1811577234.033177,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "vid",
+    "value": "ac2f9aa2108c4e373045",
+    "domain": ".hybrid.ai",
+    "path": "/",
+    "expires": 1811577662.061231,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "aidata_sync",
+    "value": "L8Kj",
+    "domain": ".adhigh.net",
+    "path": "/",
+    "expires": 1811577234.07257,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adriver_sync",
+    "value": "L8Kj",
+    "domain": ".adhigh.net",
+    "path": "/",
+    "expires": 1811577234.074177,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "dc",
+    "value": "lux1",
+    "domain": ".betweendigital.com",
+    "path": "/",
+    "expires": 1811582183.070085,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "tuuid",
+    "value": "76278c15-73ad-5295-97f7-f442fdeeb253",
+    "domain": ".betweendigital.com",
+    "path": "/",
+    "expires": 1811582183.070316,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ss",
+    "value": "1",
+    "domain": ".betweendigital.com",
+    "path": "/",
+    "expires": 1811577234.09727,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ma_last_sync",
+    "value": "1780041233846",
+    "domain": ".mts.ru",
+    "path": "/",
+    "expires": 1814601234.126353,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ma_id",
+    "value": "5181644181780041231880",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811577234.158472,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "AFFICHE_W",
+    "value": "4lsMKm-ZnG-i70",
+    "domain": ".weborama.fr",
+    "path": "/",
+    "expires": 1813996434.195995,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "aid",
+    "value": "fwAABGoZRhJ08UBXBwk+AsSXH7k7nabOFB3Se1QIj2EQ+f/W",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1814601234.316874,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp14v4",
+    "value": "1780041234",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782633234.346295,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "mpid",
+    "value": "NmExOTQ2MTIyMjY0ZjMxZg==",
+    "domain": ".otm-r.com",
+    "path": "/",
+    "expires": 1811582181.620119,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None",
+    "partitionKey": "https://avito.ru",
+    "_crHasCrossSiteAncestor": true
+  },
+  {
+    "name": "uuid",
+    "value": "39536c3a-2367-41c6-5544-84f9a06d2728",
+    "domain": ".buzzoola.com",
+    "path": "/",
+    "expires": 1782638181.86645,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "yandex_monthly_cookie",
+    "value": "true",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1782633234,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "sspuid",
+    "value": "CkIDD2oZRhI5MQAnTD+nArwM1OghtPUdfTkxEhQ1N6j5s0so",
+    "domain": ".ssp-rtb.sape.ru",
+    "path": "/",
+    "expires": 1814601234.525444,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "suuid3",
+    "value": "IiQ4OWZlNGYxYS01YjMzLTExZjEtYTU4ZS0wMDI1OTBjODI0MzY*",
+    "domain": ".bumlam.com",
+    "path": "/",
+    "expires": 1814601234.554662,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "__upin",
+    "value": "3hLbyVpE6JWrGm+foJm4ig",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606172.920449,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "pid",
+    "value": "NWE0YjgyZWNiNzJkNmI1Nw",
+    "domain": ".dsp.solta.io",
+    "path": "/",
+    "expires": 1814601234.844935,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uxs_uid",
+    "value": "8a643a00-5b33-11f1-8d6f-cb55338d1418",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601234,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "as-user",
+    "value": "87cee988-ee85-49ac-9fc1-4897183535f1",
+    "domain": "sync.adspend.space",
+    "path": "/",
+    "expires": 1782633234.850487,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "user_id",
+    "value": "a9cd3ec9-338f-45c0-bc1f-d0eec6a3848a",
+    "domain": ".upravel.com",
+    "path": "/",
+    "expires": 1814606184.074626,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "afp_cookie",
+    "value": "gAAAAABqGUYSxMgESH3P4cMeUdj8XTiKEYy4dvZq3SbKsHkRcgL4rNsjwvgGm1IGw-3eCtgyI9z3coEUhkBUQalVIBXqZw_vc5o9hUVk1UPo72secLJIOJvvktv2sd2VwRgOICnxRGs8kWkcAWFQWPcvi35PW7rvhiNHHyEth0sAJmZY4r38jWNuuihplKOj6G2almoLXkxjc-7gEqVd_5e4GP66pijdqg==$",
+    "domain": "ssp.afp.ai",
+    "path": "/",
+    "expires": 1782719634.880296,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "pid",
+    "value": "M2IwZTZkZjZmZTBlMzVlMA",
+    "domain": ".opendsp.ru",
+    "path": "/",
+    "expires": 1814606182.430878,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adudid",
+    "value": "dho8Mj8YqaFicVqYQGOumirN6RAVQpLzysLJq629a1W694kmY4B3FpGjdKDujT76Bs10DbFJGa_2w95X4drpnQ",
+    "domain": ".lotus-dsp.ru",
+    "path": "/",
+    "expires": 1814601235.051772,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "domain_sid",
+    "value": "zh9tFPNbPl2cPAtAlKPBW%3A1780041235058",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1780646035.058905,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "u",
+    "value": "ahlGEt5dKqA~5LKAHBpIh6_UoCIkqRatTlM6uII",
+    "domain": "kimberlite.io",
+    "path": "/",
+    "expires": 1787822181.709534,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "JWT-Cookie",
+    "value": "eyJhbGciOiJIUzUxMiJ9.eyJkYXQiOiIxZTc1ZmU4YS1iZjU3LTRhZTEtYTMxYi0zN2I5NjA0ZGZhNTUiLCJleHAiOjQuOTMzNjMyODM0MjM3MzU3MDIxZTl9.kKM1LQH4UxmVMm01IxxxW4krJ8RH-cwh3EAf05MA0odE0seAilySn0AfOLtjstze5o5y5ND1soLLRAdAAxvoVA",
+    "domain": "bls-report.getshop.tv",
+    "path": "/",
+    "expires": 1814601235.079888,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "XSRF-TOKEN",
+    "value": "3CpeBrrzGWRJlNh9JKwdL8h0ZKaQoZhc90b3w2M62aA=",
+    "domain": "bls-report.getshop.tv",
+    "path": "/",
+    "expires": 1814601235.079949,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "rai",
+    "value": "1ae54ccbd095e1acde975180a7f9c89e",
+    "domain": "prodmp.ru",
+    "path": "/",
+    "expires": 1785225235.082184,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "preutid",
+    "value": "1",
+    "domain": ".utraff.com",
+    "path": "/",
+    "expires": 1782644034.278882,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bvuid",
+    "value": "o398i90h9f",
+    "domain": ".bidvol.com",
+    "path": "/",
+    "expires": 1814601235.441754,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "a5c2082b-8875-46e3-92b2-30c53ab14c33.6a194613.83da355f46e11da5",
+    "domain": ".kombinat.digital",
+    "path": "/",
+    "expires": 1782633235.499228,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "pid",
+    "value": "MzU2Y2RkMTk2NzU0ZjgwOA",
+    "domain": ".programmatica.com",
+    "path": "/",
+    "expires": 1814606182.645736,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "c04824fc4fe5afb992c34",
+    "domain": ".bidster.net",
+    "path": "/",
+    "expires": 1814606183.015135,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_ag_uid",
+    "value": "d70b7333b109cd2a8773de58779fadb5",
+    "domain": ".giftclick.ru",
+    "path": "/",
+    "expires": 1811577235.63142,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "CID",
+    "value": "ac0da52ff1890e511081cd7222e45f69",
+    "domain": ".us.ck-ie.com",
+    "path": "/",
+    "expires": 1780646039.333338,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "am-uid",
+    "value": "2667c4149c32426eabfaea051255d308",
+    "domain": ".admixer.net",
+    "path": "/",
+    "expires": 1787822127.947401,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ym_user_cookie",
+    "value": "ym_user_271c52d1-6d22-4fd6-91db-9a8039e31294",
+    "domain": ".ymmobi.com",
+    "path": "/",
+    "expires": 1811145245.459099,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bringadsutid",
+    "value": "S6yZ2ZtQ6G8-utiSUBfoLlybfB8BEvkdmZkZsGoSByHxTsvtG-Jdf_TQluadDoXU",
+    "domain": ".bringads.ru",
+    "path": "/",
+    "expires": 1814601251.050038,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cookie",
+    "value": "83d31c0ed1a4b95a",
+    "domain": ".onaudience.com",
+    "path": "/",
+    "expires": 1811582123.95626,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "__zzatw-avito",
+    "value": "MDA0dBA=Fz2+aQ==",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1811582169,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "__zzatw-avito",
+    "value": "MDA0dBA=Fz2+aQ==",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582169,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_ga_ZJDLBTV49B",
+    "value": "GS2.1.s1780041491$o1$g0$t1780041491$j60$l0$h0",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814601491.079646,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "captcha_v4_user",
+    "value": "641fb49af21e4901af2ed4640e0aad94",
+    "domain": "gcaptcha4.geetest.com",
+    "path": "/",
+    "expires": 1811577546.931764,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "v",
+    "value": "1780046107",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780047983.217956,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "selected_locale",
+    "value": "ru-RU",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "cssid",
+    "value": "ce6ac5c0-25c5-484a-b14e-165a51516210",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1780047909,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cssid_exp",
+    "value": "1780047909407",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1780047909,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "yabs-sid",
+    "value": "2186634031780046109",
+    "domain": "mc.yandex.ru",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_ym_visorc",
+    "value": "b",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780047972,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "mkmgsgp",
+    "value": "TFSKDC",
+    "domain": ".hybrid.ai",
+    "path": "/",
+    "expires": 1780050140.619511,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "mkmgrgp",
+    "value": "TFSKDC",
+    "domain": ".hybrid.ai",
+    "path": "/",
+    "expires": 1780050140.61958,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "buyer_from_page",
+    "value": "main",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "gcfids",
+    "value": "NsNtg1mN09TBWmTKydTJi3Wfn-n2RxYSGcYZuWLJ8zwvnhFc+O6uecALVusYrMzM02FxMKdXbDQxMeAarkzIbwveJTr-CKI4XR+chekMpF8Xvhvghq7Ggjk9UPIbfg42uUyuYv1aNXf8Shgy2RENsJOwR+sB10KbhhAiNNhOTQKLdudIn8EFWF-c",
+    "domain": ".id.facct.ru",
+    "path": "/",
+    "expires": 1811582116.202427,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cfidsw-avito",
+    "value": "5jxuXEpXepdaS3oQcaDWIScBdH/OmFeUDGrm0ddq3LIs/J9q2Rvh3afL0K/vLcT7B4ATxvV5ewSAj49kLJxEo5uPltlVwnJ8QKrLX2hg/ejUvzKkc5d3T6CuX7X/4OZ4PdV4doVYHps542uBuFyMyyJIftkAQvSh2Wxy2g==",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1811582169,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "cfidsw-avito",
+    "value": "5jxuXEpXepdaS3oQcaDWIScBdH/OmFeUDGrm0ddq3LIs/J9q2Rvh3afL0K/vLcT7B4ATxvV5ewSAj49kLJxEo5uPltlVwnJ8QKrLX2hg/ejUvzKkc5d3T6CuX7X/4OZ4PdV4doVYHps542uBuFyMyyJIftkAQvSh2Wxy2g==",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582169,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_avisc",
+    "value": "aWmu0nMXSQ44bVlaJoLmTLTdwnrensUqGPZRZNunIUs=",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780046229.549457,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "sessid",
+    "value": "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3ODAxMzI1NjksImlhdCI6MTc4MDA0NjE2OSwidSI6ODkyNjA5MiwicCI6NTcxODE4MywicyI6IjdlNTM1ODM3NzUxOTA4ZjQ2MGFkNTM5MDRjYWNlYzdlLjE3ODAwNDYxNjkiLCJoIjoiTWpnM1lUSTJZamRoTnpaak5HWTJNVFE1WXpBNE1UWTFNelprTWpSallqRmpZekE1TVdNeU1UcE5Na3AyWWpKRk5VMHpSWFZqUjNSd1ltMU5NMHh0VmpCUFZ6UTFUMWhrTlZsWVdYZE5RUSIsImQiOiIzYm9vYTkzcS5wa2luYzcuZXQ5bjk5d3lhdjAwIiwicGwiOiJkZXNrdG9wIiwiZXh0cmEiOm51bGx9.v1ntDh-dAemFXli5jidkPy8CBm6Oi1ATRbwcx26tjwKjdmGVEdwUGSPC--ACvfdA2hJs0tWYcxBr-fZ-DvCOow",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606169.549597,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "auth",
+    "value": "1",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606169.549666,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "rt",
+    "value": "fa01f500dd8b554ef06bf5977e0de8e1",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606169.54971,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "cfidsw-avito",
+    "value": "glufJY7MWasVIqMif+BmlQAB258S87QK4hYW7q9zkT1CHKQgLZ/NrHkWWvFwz2brTEKDNW19StGb/DQzYCEaAF3pNarREjy6Coxq6UmxIJIivOlSxtKz8d/Y8tWmAb0eS5Iq2B42WsqZYKPgehoquotFOKUr9dzUjCW3Rg==",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1811582170.025012,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_ga_M29JC28873",
+    "value": "GS2.1.s1780046110$o2$g1$t1780046170$j60$l0$h0",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1814606170.46589,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "cartCounter",
+    "value": "0",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1780046472.064581,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "sx",
+    "value": "H4sIAAAAAAAC%2FwTAuw2DMBQF0F1uncLf%2B%2FJcOlLiJrAD%2FkgsQIHl3TkTJFmbcCg1MlC7HN1rk2hqlaZIExcS%2FtuZS%2FnlEe7P7r7ECx3JyttY7yJ1rScAAP%2F%2F51RKVUwAAAA%3D",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780650972.108867,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "__ai_fp_uuid",
+    "value": "35090fbb348f2d01%3A3",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582172,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bh",
+    "value": "EkEiQ2hyb21pdW0iO3Y9IjE0OCIsICJHb29nbGUgQ2hyb21lIjt2PSIxNDgiLCAiTm90L0EpQnJhbmQiO3Y9Ijk5IhoDeDg2Ig4xNDguMC43Nzc4LjE3OSoCPzA6CSJXaW5kb3dzIkIGMTkuMC4wSgI2NFJbIkNocm9taXVtIjt2PSIxNDguMC43Nzc4LjE3OSIsIkdvb2dsZSBDaHJvbWUiO3Y9IjE0OC4wLjc3NzguMTc5IiwiTm90L0EpQnJhbmQiO3Y9Ijk5LjAuMC4wImDcsuXQBmoe3Mrh/wiS2KGxA5/P4eoD+/rw5w3r//32D9OgzocI",
+    "domain": ".yandex.ru",
+    "path": "/",
+    "expires": 1814606172,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "tmr_detect",
+    "value": "0%7C1780046174866",
+    "domain": "www.avito.ru",
+    "path": "/",
+    "expires": 1780132574,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "sd",
+    "value": "1",
+    "domain": ".content.adriver.ru",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "rs",
+    "value": "1",
+    "domain": ".content.adriver.ru",
+    "path": "/",
+    "expires": 1780046194,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ma_ss_64a8dba6-67f3-4fe4-8625-257c4adae014",
+    "value": "1780046110075052291.2.1780046179.5.1780046110",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780132510,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "dmpuid",
+    "value": "RD29J8iQRJylHd2lUceXAQ",
+    "domain": ".sbermarketing.ru",
+    "path": "/",
+    "expires": 1811582180.042239,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "sn",
+    "value": "{\"o\":{\"4\":0,\"5\":0,\"6\":0,\"7\":0,\"10\":0,\"11\":0,\"16\":0,\"17\":0,\"19\":2,\"20\":0,\"33\":0,\"46\":0,\"65\":0,\"68\":0,\"91\":0,\"144\":0,\"148\":0,\"149\":0,\"150\":0,\"153\":0,\"155\":0,\"156\":0,\"157\":0,\"161\":0,\"164\":0,\"166\":0,\"167\":0,\"169\":0,\"171\":0,\"173\":0,\"174\":0,\"175\":0,\"176\":0,\"179\":0,\"180\":0,\"181\":0,\"182\":0,\"183\":0,\"209\":0,\"210\":0,\"219\":2,\"224\":2,\"680\":0,\"1024\":0,\"1228\":2,\"1287\":0,\"1560\":0,\"12872\":0},\"b\":494455}",
+    "domain": ".content.adriver.ru",
+    "path": "/",
+    "expires": 1814606180.092437,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "snR",
+    "value": "1",
+    "domain": ".content.adriver.ru",
+    "path": "/",
+    "expires": 1780046216,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ma_id_api",
+    "value": "\"gZA/2ZDlHaeCnapH95lK5/Cq+T0fAq6UeewYp403XBUQs3EWVT9LR1tiAmQ736cWtOgjrE5jByzZ+AeTl3PD7EUOqXBz15fa8aMQC5ley5fQ6jQB50hTA5ZiMN7tV0R6wz0fU5bNJcN1JeRU1UrpFaOIstc63u2sM+TNw0VoLrA05yk26QcL9Zb0yVUhyAPhJYTSzRXBci+wZHcuTSpQVqmOnKWB8/Rf7Lx+V7uJf+yBpF+btMAm+9Zh8YmcjYsNpGTb1nH2b9jUgtsvclY8y1b01PhopgVPOomoEVXbjSFby8uvnQOR/VXkfPl0HfjI11LC1F7S5ksg/RC7sx2rug==\"",
+    "domain": ".mts.ru",
+    "path": "/",
+    "expires": 1814606180.152576,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ma_id_api",
+    "value": "gZA/2ZDlHaeCnapH95lK5/Cq+T0fAq6UeewYp403XBUQs3EWVT9LR1tiAmQ736cWtOgjrE5jByzZ+AeTl3PD7EUOqXBz15fa8aMQC5ley5fQ6jQB50hTA5ZiMN7tV0R6wz0fU5bNJcN1JeRU1UrpFaOIstc63u2sM+TNw0VoLrA05yk26QcL9Zb0yVUhyAPhJYTSzRXBci+wZHcuTSpQVqmOnKWB8/Rf7Lx+V7uJf+yBpF+btMAm+9Zh8YmcjYsNpGTb1nH2b9jUgtsvclY8y1b01PhopgVPOomoEVXbjSFby8uvnQOR/VXkfPl0HfjI11LC1F7S5ksg/RC7sx2rug==",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1811582180.353403,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "f",
+    "value": "5.10a94bb89dd075605aeee6901ff1e4ada68643d4d8df96e9a68643d4d8df96e9a68643d4d8df96e9a68643d4d8df96e94f9572e6986d0c624f9572e6986d0c624f9572e6986d0c62ba029cd346349f36c1e8912fd5a48d02c1e8912fd5a48d0246b8ae4e81acb9fa1a2a574992f83a9246b8ae4e81acb9fa46b8ae4e81acb9fae992ad2cc54b8aa878dd3c0bc13fd51dfa4d7ea84258c63d59c9621b2c0fa58f915ac1de0d034112f12b79bbb67ac37d46b8ae4e81acb9fae2415097439d40477fde300814b1e85546b8ae4e81acb9fa34d62295fceb188dd99271d186dc1cd03de19da9ed218fe2d50b96489ab264edd50b96489ab264ed3de19da9ed218fe246b8ae4e81acb9fa38e6a683f47425a8352c31daf983fa077a7b6c33f74d335c84df0fd22b85d35f4baba59b3288d746574b90246617ff27049e2fbb1bba103bcf6719fa03b8138a6c077a27e77923760313462dcef22011231f57a48135c490e2415097439d404746b8ae4e81acb9fa786047a80c779d5146b8ae4e81acb9faade58f47210bd0e12da10fb74cac1eab71e7cb57bbcb8e0fb3ae333f3b35fe91de6c39666ae9b0d7312f8fecc8ca5e543486a07687daa291",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780132580,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "ft",
+    "value": "\"m/WtaQMDSgEN6+jZT4WkEVELCv27G1gw3YNQwlSOeudedbhyPUfLlkvVHBVelVPPb2lKYFy0t33X18SHUHjtyCtoQzyvgfEvSKdyitgJXWgrFGs19vJ22hN4+8DmhhymlTALynkDgEefjhphTCrD1w==\"",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780132581,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_buzz_aidata",
+    "value": "JTdCJTIydWZwJTIyJTNBJTIyM2hMYnlWcEU2SldyR20lMkJmb0ptNGlnJTIyJTJDJTIyYnJvd3NlclZlcnNpb24lMjIlM0ElMjIxNDguMCUyMiUyQyUyMnRzQ3JlYXRlZCUyMiUzQTE3ODAwNDYxNzI5MjAlN0Q=",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1780650981,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "_buzz_mtsa",
+    "value": "JTdCJTIydWZwJTIyJTNBJTIyYTgwNTVkY2U5MWQxN2FjZjhkMTYwYWQ0ZGYyYWIzNjElMjIlMkMlMjJicm93c2VyVmVyc2lvbiUyMiUzQSUyMjE0OC4wJTIyJTJDJTIydHNDcmVhdGVkJTIyJTNBMTc4MDA0NjE4MDQ3MyU3RA==",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1780650981,
+    "httpOnly": false,
+    "secure": false,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "livin",
+    "value": "1",
+    "domain": "x01.aidata.io",
+    "path": "/",
+    "expires": 1780305381.479023,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "PVID",
+    "value": "3vkVyD0Lkmoe00003X33nS2e:::0-0-0-f339ed1-0-f33b225:CAASEJ_p9TBrCkxeA__Iu4DsKfoaYL0i0a2Tv192kERJ87XG1ejYpbnOHAesvsvZ1BYWA3MWLSzf1nN81anM6eP_nzbFvn48OQ3TAM8BGref60SoYvdWdiKg8ystVgDcRPBmb6v4tPFwCQy0ydc_4f-8pVW2XA",
+    "domain": "top-fwz1.mail.ru",
+    "path": "/",
+    "expires": 1811668581.480737,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None",
+    "partitionKey": "https://avito.ru",
+    "_crHasCrossSiteAncestor": true
+  },
+  {
+    "name": "VID",
+    "value": "3vkVyD0Lkmoe00003X33nS2e:::0-0-0-f339ed1-0-f33b225:CAASEJ_p9TBrCkxeA__Iu4DsKfoaYL0i0a2Tv192kERJ87XG1ejYpbnOHAesvsvZ1BYWA3MWLSzf1nN81anM6eP_nzbFvn48OQ3TAM8BGref60SoYvdWdiKg8ystVgDcRPBmb6v4tPFwCQy0ydc_4f-8pVW2XA",
+    "domain": ".mail.ru",
+    "path": "/",
+    "expires": 1811668581.480995,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "chk",
+    "value": "1",
+    "domain": "sync.adsp.io",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "pid",
+    "value": "ZjZiMGY1N2Y3ODI5YTc2",
+    "domain": ".adsp.io",
+    "path": "/",
+    "expires": 1814606182.795143,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "XV9maWoZWWVVLbC4jM6gAg==",
+    "domain": ".gnezdo.ru",
+    "path": "/",
+    "expires": 1814606181.843223,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "2ec9e6513086d6a83a1b",
+    "domain": ".moe.video",
+    "path": "/",
+    "expires": 1814606181.981781,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "afp_cookie",
+    "value": "gAAAAABqGVllhm3DkpRGe5rxGawlU8dXbJGnr81oxyGSPk7gWNKjkGcHA78nUaQ4-yDdG_Mp94zMpm-DvcN6kvd6OSyEfWpJ_Tyv-ZpIK-F2zlZBQcpO5C4j4olVvYJFIZFBm1C4Fnsod8cke-DgeQiQgAC8QqF5qBzEpw25DI87RxzB09qeyQhWmusL1XdfGoFFlmtDqPSlPPO7s7_jS_yuNWRC86xLnQ==$",
+    "domain": "ssp.al-adtech.com",
+    "path": "/",
+    "expires": 1782724582.016125,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ctrl.uid",
+    "value": "508124a5-6d08-42c6-88d6-318f6edff09a",
+    "domain": "x.ctrltech.ai",
+    "path": "/",
+    "expires": 1782638182.064643,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "_adcc",
+    "value": "2.ghwvWuE5xOHS9phJG68pZIkcvYK56hrTGwbUPvOYdqafyFLI+B2hmnxODW4ehV7n3kW6insA3h9u38Zd9UhyIRrL8tEy9C4D89EECRuWyzirTBGYzRuejjtFjO1C2mnB/RD9w5tFgJopoaBWNen9mkuGb3o3",
+    "domain": ".avito.ru",
+    "path": "/",
+    "expires": 1780132582.072573,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "Lax"
+  },
+  {
+    "name": "uid",
+    "value": "77349a4f-1f77-48af-ba80-07bc0ca14880.6a195965.8a9ae60e42028010",
+    "domain": ".ohmy.bid",
+    "path": "/",
+    "expires": 1782638182.074378,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "tuuid",
+    "value": "171d97de-8b4e-4f68-985e-9b03a1f3a28b",
+    "domain": ".bidswitch.net",
+    "path": "/",
+    "expires": 1811582182.242285,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "c",
+    "value": "1780046181",
+    "domain": ".bidswitch.net",
+    "path": "/",
+    "expires": 1811582182.149864,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "tuuid_lu",
+    "value": "1780046181",
+    "domain": ".bidswitch.net",
+    "path": "/",
+    "expires": 1811582182.242523,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "Rsnq1x16RjGCTDBraNzvQQNuxeISH1on2ovB241aazhtiNl0_in8mXznm8vkgBmYA",
+    "domain": ".targetrtb.com",
+    "path": "/",
+    "expires": 1811582184.290556,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "csprefid",
+    "value": "8dcfa00c-d68f-4a67-9626-a60c911e838d",
+    "domain": ".www.avito.ru",
+    "path": "/",
+    "expires": 1780047982,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "bug",
+    "value": "1",
+    "domain": ".betweendigital.com",
+    "path": "/",
+    "expires": 1811582182.515875,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "chk",
+    "value": "1",
+    "domain": "sync.dvgroup.com",
+    "path": "/",
+    "expires": -1,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "buzzoola_sync",
+    "value": "L8Kj",
+    "domain": ".adhigh.net",
+    "path": "/",
+    "expires": 1811582182.660474,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "pid",
+    "value": "mnaqq3wqze4pc---1",
+    "domain": ".dvgroup.com",
+    "path": "/",
+    "expires": 1814606182.666678,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "adspectorutid",
+    "value": "Qf8FDaS8pEu-F5VEpFf3lfyqiAwHSZeVOHtmPRjV1IkzhaH9sMigJJ13Z1HCQSB7",
+    "domain": ".adspector.io",
+    "path": "/",
+    "expires": 1814606182.864705,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp126v4",
+    "value": "1780046182",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782638182.910222,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp107v2",
+    "value": "1780046182",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782638182.974918,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "Hybrid_vox_exchange_user_id",
+    "value": "6753c28b7ddd4bfc82fb9d560b5b6fd7",
+    "domain": "cm-ssp.voxexchange.io",
+    "path": "/",
+    "expires": 1782638183.287156,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "ut",
+    "value": "ahlZZgALbcht6wFkl73b7Q0pLw-sEbpl7DMcrA==",
+    "domain": ".betweendigital.com",
+    "path": "/",
+    "expires": 1811582183.070425,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp217v3",
+    "value": "1780046182",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782638183.104218,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "scm",
+    "value": "92.2124.45.2124",
+    "domain": ".ohmy.bid",
+    "path": "/",
+    "expires": 1782638183.13569,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "scm",
+    "value": "143.2122.147.2124",
+    "domain": ".kombinat.digital",
+    "path": "/",
+    "expires": 1782638183.150817,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp394v1",
+    "value": "1780046182",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782638183.165185,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "uid",
+    "value": "6a61029b-d28f-4418-a855-af822254e00b.6a195967.b5599716ffb566af",
+    "domain": ".linkssp.ru",
+    "path": "/",
+    "expires": 1782638183.34297,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "scm",
+    "value": "69.2124",
+    "domain": ".linkssp.ru",
+    "path": "/",
+    "expires": 1782638183.343206,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "cSyncDp368v1",
+    "value": "1780046183",
+    "domain": ".acint.net",
+    "path": "/",
+    "expires": 1782638183.420307,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "dmpuid",
+    "value": "AZ5zBTzGfE6jio3wfjjzXQ",
+    "domain": ".gpmdata.ru",
+    "path": "/",
+    "expires": 1814606183.924381,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "preutid",
+    "value": "1",
+    "domain": ".ussp.io",
+    "path": "/",
+    "expires": 1782648984.374465,
+    "httpOnly": false,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "smi_uid",
+    "value": "9uXHpBtxb",
+    "domain": ".pxltag.com",
+    "path": "/",
+    "expires": 1811582184.480951,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  },
+  {
+    "name": "smi_cm_chain",
+    "value": "eyJzb3VyY2VfcGxhdGZvcm1faWQiOiIwOWE0MGI0YmQzZWI0MTRlYWRjNjkwZDI1YzNhM2Y1NyIsImV4cGVjdGVkX3BsYXRmb3JtX2lkIjoiNjQwNzkiLCJpbm5lcl9pZCI6Ijl1WEhwQnR4YiIsInJlbWFpbmluZ19wbGF0Zm9ybV9pZHMiOlsiNjQwNzkiLCI2Mzc2OSIsIjYzODY3IiwiNjM2MjEiXSwibmV4dF9wb3NpdGlvbiI6MSwicmVkaXJlY3RfY291bnQiOjEsImV4cGlyZXNfYXRfdW5peCI6MTc4MDA0NjQ4NCwiZmluYWxfcmVkaXJlY3RfdXJsIjoiaHR0cHM6Ly9leGNoYW5nZS5idXp6b29sYS5jb20vY29va2llc3luYy9kc3AvYWR3aWxlLWJhbm5lci1idXp6b29sYT91aWQ9e2lubmVyX2lkfSJ9.89ccda4d00dfaf263c3b9b7408a3a21a7f1a2a8d8ebd66d630e28059425030b4",
+    "domain": ".pxltag.com",
+    "path": "/",
+    "expires": 1780046484.40747,
+    "httpOnly": true,
+    "secure": true,
+    "sameSite": "None"
+  }
+]

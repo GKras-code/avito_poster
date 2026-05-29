@@ -54,10 +54,11 @@ class AvitoAuthBootstrap:
 
         with sync_playwright() as playwright:
             context = self._open_persistent_context(playwright)
+            self._sync_persistent_context_with_saved_session(context)
             self._prepare_interactive_context(context)
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
-            page.goto(self.config.base_url, wait_until="domcontentloaded")
+            page.goto(self._get_interactive_start_url(), wait_until="domcontentloaded")
             page = self._get_active_page(context, page)
 
             self._prepare_login_flow(page)
@@ -87,10 +88,11 @@ class AvitoAuthBootstrap:
 
         with sync_playwright() as playwright:
             context = self._open_persistent_context(playwright)
+            self._sync_persistent_context_with_saved_session(context)
             self._prepare_interactive_context(context)
             page = context.pages[0] if context.pages else context.new_page()
             page.set_default_timeout(self.config.timeout_ms)
-            page.goto(self.config.base_url, wait_until="domcontentloaded")
+            page.goto(self._get_interactive_start_url(), wait_until="domcontentloaded")
             page = self._get_active_page(context, page)
             self._prepare_login_flow(page)
 
@@ -245,6 +247,56 @@ class AvitoAuthBootstrap:
     def _prepare_interactive_context(self, context: BrowserContext) -> None:
         """Следит за новыми окнами и переносит их на передний план в VNC-сессии."""
         context.on("page", self._focus_interactive_page)
+
+    def _get_interactive_start_url(self) -> str:
+        """Открывает профиль, если сохранённая сессия уже есть; иначе обычную главную страницу."""
+        if self.config.storage_state_path.exists():
+            return f"{self.config.base_url.rstrip('/')}/profile"
+
+        return self.config.base_url
+
+    def _sync_persistent_context_with_saved_session(self, context: BrowserContext) -> None:
+        """Подмешивает уже сохранённую сессию в persistent browser, чтобы UI и проверка видели одно состояние."""
+        storage_state_path = self.config.storage_state_path
+        if not storage_state_path.exists():
+            return
+
+        state = json.loads(storage_state_path.read_text(encoding="utf-8"))
+        cookies = state.get("cookies") or []
+        origins = state.get("origins") or []
+
+        if cookies:
+            context.clear_cookies()
+            context.add_cookies(cookies)
+
+        if not origins:
+            return
+
+        page = context.pages[0] if context.pages else context.new_page()
+        page.set_default_timeout(self.config.timeout_ms)
+
+        for origin_state in origins:
+            origin = origin_state.get("origin")
+            local_storage_items = origin_state.get("localStorage") or []
+            if not origin or not local_storage_items:
+                continue
+
+            try:
+                page.goto(origin, wait_until="domcontentloaded")
+                page.evaluate(
+                    """
+                    (items) => {
+                        for (const item of items) {
+                            if (item && typeof item.name === 'string') {
+                                window.localStorage.setItem(item.name, item.value ?? '');
+                            }
+                        }
+                    }
+                    """,
+                    local_storage_items,
+                )
+            except Exception:
+                continue
 
     def _focus_interactive_page(self, page: Page) -> None:
         """Фокусирует новое окно авторизации, если браузер открыл отдельную страницу."""
