@@ -47,11 +47,8 @@ def _run_auth_flow() -> None:
 
         input()
 
-        try:
-            page.goto(f"{BASE_URL.rstrip('/')}/profile", wait_until="domcontentloaded")
-            page.wait_for_load_state("load", timeout=5_000)
-        except PlaywrightTimeoutError:
-            pass
+        page = _get_active_page(context, page)
+        _stabilize_current_page(page)
 
         context.storage_state(path=str(STORAGE_STATE_PATH))
         COOKIES_PATH.write_text(
@@ -92,6 +89,34 @@ def _preferred_browser_channels() -> list[str]:
         return ["msedge", "chrome"]
 
     return ["chrome"]
+
+
+def _get_active_page(context, fallback_page):
+    pages = [page for page in context.pages if not page.is_closed()]
+    return pages[-1] if pages else fallback_page
+
+
+def _stabilize_current_page(page) -> None:
+    _stabilize_after_manual_login(page)
+
+
+def _stabilize_after_manual_login(page) -> None:
+    print("Сохраняю текущую сессию браузера...")
+
+    try:
+        page.wait_for_load_state("domcontentloaded", timeout=5_000)
+    except PlaywrightTimeoutError:
+        pass
+
+    try:
+        page.wait_for_load_state("load", timeout=5_000)
+    except PlaywrightTimeoutError:
+        pass
+
+    try:
+        page.wait_for_load_state("networkidle", timeout=3_000)
+    except PlaywrightTimeoutError:
+        pass
 
 
 def _wait_until_user_closes_console() -> None:
