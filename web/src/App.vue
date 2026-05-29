@@ -18,6 +18,7 @@ const avitoCheckError = ref('')
 const avitoAuthStartPending = ref(false)
 const avitoAuthFlow = ref({ status: 'idle', message: '' })
 let authPollTimer = null
+const embeddedBrowserUrl = '/browser/vnc.html?autoconnect=1&resize=scale'
 
 const menuItems = [
   { id: 'account', label: 'Аккаунт' },
@@ -202,8 +203,22 @@ onBeforeUnmount(() => {
             <p class="status-line">Статус сессии авторизации: <strong>{{ avitoAuthFlow.status }}</strong></p>
             <p class="status-line">{{ avitoAuthFlow.message }}</p>
             <p class="status-line auth-note">
-              Браузер откроется на машине, где запущен backend. В этом окне пользователь сам проходит вход, captcha и SMS.
+              Ниже открыт браузер backend-сессии. В нём пользователь сам проходит вход, captcha и SMS.
             </p>
+          </div>
+
+          <div v-if="avitoAuthFlow.status !== 'idle'" class="browser-box">
+            <div class="browser-box-head">
+              <strong>Окно браузера авторизации</strong>
+              <a class="browser-link" :href="embeddedBrowserUrl" target="_blank" rel="noopener noreferrer">
+                Открыть в новой вкладке
+              </a>
+            </div>
+            <iframe
+              class="browser-frame"
+              :src="embeddedBrowserUrl"
+              title="Avito auth browser"
+            />
           </div>
 
           <button type="button" class="primary-button action-button" @click="checkAvitoAuthorization" :disabled="avitoCheckPending">

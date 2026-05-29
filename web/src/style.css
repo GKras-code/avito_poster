@@ -290,6 +290,7 @@ h2 {
 }
 
 .status-box,
+.browser-box,
 .empty-tab {
   width: 100%;
   margin-top: 24px;
@@ -300,6 +301,31 @@ h2 {
 
 .status-box {
   padding: 20px;
+}
+
+.browser-box {
+  padding: 14px;
+}
+
+.browser-box-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.browser-link {
+  color: var(--brand-deep);
+  text-decoration: none;
+}
+
+.browser-frame {
+  width: 100%;
+  height: 760px;
+  border: 0;
+  border-radius: 16px;
+  background: #221b16;
 }
 
 .status-line {
@@ -354,5 +380,14 @@ h2 {
 
   .menu {
     width: 100%;
+  }
+
+  .browser-box-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .browser-frame {
+    height: 520px;
   }
 }
